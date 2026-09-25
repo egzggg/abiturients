@@ -52,6 +52,36 @@ make test
 Для разового CLI-запроса используйте
 `make runSearchChunksTest QUESTION="Какие направления обучения доступны?"`.
 
+## Оценка embedding-моделей
+
+Запустите сравнение текущего эмбеддера на golden-наборе Волгатеха и SQuAD 1.1:
+
+```bash
+make evalEmbeddings
+```
+
+Метрики `hit_rate@k`, `recall@k` и `mrr@k` выводятся в терминал. Подробный JSON
+с результатами и временем расчёта сохраняется в `eval/results/`. По умолчанию
+используется `EMBEDDING_MODEL` из `.env` (или
+`intfloat/multilingual-e5-large`). Можно ограничить прогон одним набором:
+
+```bash
+make evalEmbeddings EVAL_ARGS="--datasets golden"
+```
+
+Для одновременного сравнения E5, BGE-M3 и GTE установите дополнительный backend
+и перечислите модели:
+
+```bash
+.venv/bin/pip install sentence-transformers
+make evalEmbeddings EVAL_ARGS="--models intfloat/multilingual-e5-large,intfloat/multilingual-e5-base,BAAI/bge-m3,Alibaba-NLP/gte-multilingual-base"
+```
+
+E5 оценивается с теми же префиксами, усреднением токенов и нормализацией, что и
+производственный `Embedder`. SQuAD измеряет поиск по англоязычным абзацам; для
+выбора модели для бота отдельно смотрите результат `abitura_golden` на русском
+корпусе.
+
 ## Конфигурация
 
 Все параметры описаны в `.env.example`. Основные:
