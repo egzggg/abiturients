@@ -1,40 +1,40 @@
-import redis
+"""Print stored Redis chunks without dumping full embeddings."""
+
 import json
 
-r = redis.Redis(
-    host='localhost',
-    port=6379,
-    decode_responses=True
-)
+import redis
 
-print("Redis connected:", r.ping())
+from config import get_settings
 
-# используем SCAN вместо KEYS
-pattern = "*:chunk:*"
-count = 0
 
-for key in r.scan_iter(match=pattern):
-    raw = r.get(key)
-    if not raw:
-        continue
+def main() -> None:
+    settings = get_settings()
+    client = redis.Redis(
+        host=settings.redis_host,
+        port=settings.redis_port,
+        decode_responses=True,
+    )
+    print("Redis connected:", client.ping())
 
-    try:
-        data = json.loads(raw)
-    except Exception as e:
-        print(f"Ошибка JSON в ключе {key}: {e}")
-        continue
+    count = 0
+    for key in client.scan_iter(match="*:chunk:*"):
+        raw = client.get(key)
+        if not raw:
+            continue
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError as error:
+            print(f"Invalid JSON in {key}: {error}")
+            continue
 
-    print(f"KEY: {key}")
-    # Ограничиваем вывод embedding
-    if 'embedding' in data and isinstance(data['embedding'], list):
-        emb_preview = data['embedding'][:5] + ["..."] if len(data['embedding']) > 5 else data['embedding']
-        data_copy = data.copy()
-        data_copy['embedding'] = f"{emb_preview} (длина: {len(data['embedding'])})"
-        print(json.dumps(data_copy, indent=2, ensure_ascii=False))
-    else:
+        embedding = data.get("embedding")
+        if isinstance(embedding, list):
+            data["embedding"] = f"{embedding[:5]}... (length: {len(embedding)})"
+        print(f"KEY: {key}")
         print(json.dumps(data, indent=2, ensure_ascii=False))
-    print("-" * 40)
+        count += 1
+    print(f"Total: {count}")
 
-    count += 1
 
-print(f"\nВсего найдено: {count}")
+if __name__ == "__main__":
+    main()

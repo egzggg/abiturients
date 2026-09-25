@@ -1,21 +1,26 @@
-from typing import List, Dict
-from llm.llm_client import call_llm   # 👈 ВАЖНО (не giga_generator)
+import re
+from typing import Callable
 
-def build_rerank_prompt(query: str, chunks: List[Dict]) -> str:
-    context = ""
+from llm.llm_client import call_llm
+
+
+def build_rerank_prompt(query: str, chunks: list[dict], top_k: int = 4) -> str:
+    context_parts = []
 
     for i, ch in enumerate(chunks):
-        context += f"""
+        context_parts.append(f"""
 [{i}]
 SOURCE: {ch.get("source")}
 SECTION: {ch.get("section")}
-CONTENT: {ch.get("content")[:300]}
-"""
+CONTENT: {str(ch.get("content") or "")[:500]}
+""")
+
+    context = "".join(context_parts)
 
     return f"""
 Ты rerank система.
 
-Выбери ТОП-4 наиболее релевантных чанка.
+Выбери не более {top_k} наиболее релевантных чанков.
 
 Вопрос:
 {query}
@@ -27,22 +32,35 @@ CONTENT: {ch.get("content")[:300]}
 """
 
 
-def rerank_chunks(query: str, chunks: List[Dict], top_k: int = 4) -> List[Dict]:
-    if len(chunks) <= top_k:
-        return chunks
+def _parse_indexes(response: str, chunk_count: int) -> list[int]:
+    indexes = []
+    for match in re.findall(r"\d+", response):
+        index = int(match)
+        if 0 <= index < chunk_count and index not in indexes:
+            indexes.append(index)
+    return indexes
 
-    prompt = build_rerank_prompt(query, chunks)
-    response = call_llm(prompt, temperature=0.0)
+
+def rerank_chunks(
+    query: str,
+    chunks: list[dict],
+    top_k: int = 4,
+    *,
+    llm: Callable[..., str] = call_llm,
+) -> list[dict]:
+    if top_k <= 0:
+        return []
+    if len(chunks) <= top_k:
+        return list(chunks)
+
+    prompt = build_rerank_prompt(query, chunks, top_k)
 
     try:
-        idxs = [int(x.strip()) for x in response.split(",") if x.strip().isdigit()]
+        response = llm(prompt, temperature=0.2)
+        indexes = _parse_indexes(response, len(chunks))
+    except Exception:
+        indexes = []
 
-        result = []
-        for i in idxs:
-            if 0 <= i < len(chunks):
-                result.append(chunks[i])
-
-        return result[:top_k] if result else chunks[:top_k]
-
-    except:
-        return chunks[:top_k]
+    # A partial or malformed model response must not silently shrink context.
+    indexes.extend(index for index in range(len(chunks)) if index not in indexes)
+    return [chunks[index] for index in indexes[:top_k]]

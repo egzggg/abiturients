@@ -1,123 +1,79 @@
-import redis
+"""Load chunks into the optional Redis cache."""
+
+from __future__ import annotations
+
 import json
-import os
 import time
-import torch
-import torch.nn.functional as F
-from transformers import AutoTokenizer, AutoModel
+from pathlib import Path
+from typing import Any
 
-# ---------------- Redis ----------------
-r = redis.Redis(
-    host="localhost",
-    port=6379,
-    decode_responses=True
-)
+import redis
 
-for i in range(10):
-    try:
-        if r.ping():
-            print("Redis connected")
-            break
-    except Exception:
-        print("Waiting for Redis...")
-        time.sleep(1)
-else:
-    raise Exception("Redis not available")
-
-# ---------------- Model ----------------
-MODEL_NAME = "intfloat/multilingual-e5-large"
-
-print("Loading model...")
-
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModel.from_pretrained(MODEL_NAME)
-
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model = model.to(device)
-model.eval()
-
-print(f"Model loaded on {device}")
+from config import PROJECT_ROOT, get_settings
+from embeddings.embedder import Embedder
 
 
-def average_pool(last_hidden_state, attention_mask):
-    last_hidden = last_hidden_state.masked_fill(
-        ~attention_mask[..., None].bool(), 0.0
-    )
-    return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
+CHUNKS_DIR = PROJECT_ROOT / "chunks"
 
 
-def embed_text(text: str):
-    text = f"passage: {text}"
-
-    batch = tokenizer(
-        [text],
-        max_length=512,
-        padding=True,
-        truncation=True,
-        return_tensors="pt"
-    )
-
-    batch = {k: v.to(device) for k, v in batch.items()}
-
-    with torch.no_grad():
-        outputs = model(**batch)
-
-    embeddings = average_pool(
-        outputs.last_hidden_state,
-        batch["attention_mask"]
-    )
-
-    embeddings = F.normalize(embeddings, p=2, dim=1)
-
-    return embeddings[0].cpu().tolist()
-
-
-# ---------------- Files ----------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CHUNKS_DIR = os.path.join(BASE_DIR, "..", "chunks")
-
-FILES = [f for f in os.listdir(CHUNKS_DIR) if f.endswith(".json")]
-
-total_loaded = 0
-
-# ---------------- Main ----------------
-for filename in FILES:
-    file_path = os.path.join(CHUNKS_DIR, filename)
-
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            chunks = json.load(f)
-    except Exception as e:
-        print(f"{filename}: ошибка чтения → {e}")
-        continue
-
-    if not chunks:
-        print(f"{filename}: пустой файл")
-        continue
-
-    pipe = r.pipeline()
-    loaded = 0
-
-    for chunk in chunks:
-        key = f"{filename}:chunk:{chunk['id']}"
-
-        if r.exists(key):
-            continue
-
+def wait_for_redis(client: Any, attempts: int = 10) -> None:
+    for _ in range(attempts):
         try:
-            # если embedding отсутствует — считаем
-            if "embedding" not in chunk or not chunk["embedding"]:
-                chunk["embedding"] = embed_text(chunk["content"])
+            if client.ping():
+                return
+        except redis.RedisError:
+            time.sleep(1)
+    raise RuntimeError("Redis is not available")
 
-            pipe.set(key, json.dumps(chunk, ensure_ascii=False))
+
+def load_chunks(
+    client: Any,
+    embedder: Any,
+    chunks_dir: Path = CHUNKS_DIR,
+) -> int:
+    total_loaded = 0
+    for path in sorted(chunks_dir.glob("*.json")):
+        with path.open(encoding="utf-8") as file:
+            chunks = json.load(file)
+        if not isinstance(chunks, list):
+            raise ValueError(f"{path} must contain a JSON array")
+
+        pipeline = client.pipeline()
+        loaded = 0
+        for original in chunks:
+            chunk = dict(original)
+            chunk_id = str(chunk.get("id") or "").strip()
+            content = str(chunk.get("content") or "").strip()
+            if not chunk_id or not content:
+                raise ValueError(f"Invalid chunk in {path}")
+            key = f"{path.name}:chunk:{chunk_id}"
+            if client.exists(key):
+                continue
+            if not chunk.get("embedding"):
+                vector = embedder.embed_passage(content)
+                chunk["embedding"] = (
+                    vector.tolist() if hasattr(vector, "tolist") else list(vector)
+                )
+            pipeline.set(key, json.dumps(chunk, ensure_ascii=False))
             loaded += 1
+        if loaded:
+            pipeline.execute()
+        total_loaded += loaded
+        print(f"{path.name}: added {loaded}")
+    return total_loaded
 
-        except Exception as e:
-            print(f"{filename} / {chunk['id']}: ошибка → {e}")
 
-    pipe.execute()
+def main() -> None:
+    settings = get_settings()
+    client = redis.Redis(
+        host=settings.redis_host,
+        port=settings.redis_port,
+        decode_responses=True,
+    )
+    wait_for_redis(client)
+    total = load_chunks(client, Embedder(settings.embedding_model))
+    print(f"Total added: {total}")
 
-    print(f"{filename}: добавлено {loaded} новых чанков")
-    total_loaded += loaded
 
-print(f"Всего добавлено: {total_loaded}")
+if __name__ == "__main__":
+    main()

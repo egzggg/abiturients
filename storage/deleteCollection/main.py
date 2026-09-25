@@ -1,7 +1,32 @@
+"""Explicitly delete the application's Qdrant collections."""
+
+import argparse
+
 from qdrant_client import QdrantClient
 
-client = QdrantClient(host="localhost", port=6333)
+from config import get_settings
 
-client.delete_collection("knowledge_base")
-client.delete_collection("query_index")
-print("Collection deleted")
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--yes",
+        action="store_true",
+        help="confirm deletion of both application collections",
+    )
+    args = parser.parse_args()
+    if not args.yes:
+        parser.error("destructive operation requires --yes")
+
+    settings = get_settings()
+    client = QdrantClient(host=settings.qdrant_host, port=settings.qdrant_port)
+    for name in (settings.knowledge_collection, settings.query_collection):
+        if client.collection_exists(name):
+            client.delete_collection(name)
+            print(f"Deleted {name}")
+        else:
+            print(f"Skipped missing collection {name}")
+
+
+if __name__ == "__main__":
+    main()

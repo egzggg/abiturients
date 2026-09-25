@@ -21,14 +21,9 @@ import numpy as np
 import pandas as pd
 import os
 # from http_proxy import proxy_dict
-import logging
 import torch
 from scipy.spatial.distance import cdist
 from transformers import AutoTokenizer, AutoModel
-
-labse_tokenizer = AutoTokenizer.from_pretrained("cointegrated/LaBSE-en-ru")  #, proxies=proxy_dict)
-labse_model = AutoModel.from_pretrained("cointegrated/LaBSE-en-ru")  #, proxies=proxy_dict)
-
 
 def get_data_from_csv_file(path_to_file):
     """ # Загрузка текста вопросов/ответов """
@@ -61,10 +56,11 @@ def get_answers_df_from_csv_file(path_to_file):
 
 
 class Embedder:
-    def __init__(self):
-        # инициация необходимых объектов и переменных
-        self.tokenizer = labse_tokenizer
-        self.model = labse_model
+    def __init__(self, model_name="cointegrated/LaBSE-en-ru"):
+        # Load lazily when this legacy assistant is actually instantiated.
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.model = AutoModel.from_pretrained(model_name)
+        self.model.eval()
 
     def mean_pooling(self, model_output, attention_mask):
         """ усреднение эмбеддингов отдельных токенов предложения """
@@ -76,8 +72,8 @@ class Embedder:
 
     def embedding(self, text):
         """  """
-        encoded_input = self.tokenizer(text, padding=True, truncation=True, max_length=24, return_tensors='pt')
-        with torch.no_grad():
+        encoded_input = self.tokenizer(text, padding=True, truncation=True, max_length=512, return_tensors='pt')
+        with torch.inference_mode():
             model_output = self.model(**encoded_input)
 
         sentence_embeddings = self.mean_pooling(model_output, encoded_input['attention_mask'])
@@ -92,6 +88,7 @@ class Assistent:
         else:
             self.embedder = embedder
         # запоминание таблицы с ответами с добавлением эмбеддинга
+        answers_df = answers_df.copy()
         if 'answer_emb' in answers_df.columns:
             self.answers_df = answers_df
         else:
@@ -204,4 +201,3 @@ if __name__ == "__main__":
         input("--- нажмите ENTER для продолжения ---")
         os.system('cls')
         question = input("задайте вопрос:")
-

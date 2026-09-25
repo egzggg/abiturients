@@ -1,26 +1,45 @@
+from functools import lru_cache
+
 from gigachat import GigaChat
 from gigachat.models import Chat, Messages, MessagesRole
 
-MODEL_NAME = "GigaChat"
-GIGACHAT_CREDENTIALS = "MDE5ZDUyODgtMzcyNC03MjQ5LTkwMDQtOGZhZjFlY2EwMzEwOjgxN2RkZTdiLTlhODktNDVjMS1iZGNiLWE5MDdmYzY3NjZlMw=="
-GIGACHAT_VERIFY_SSL = False
-
-_client = None
+from config import Settings, get_settings
 
 
-def get_client():
-    global _client
-    if _client is None:
-        _client = GigaChat(
-            credentials=GIGACHAT_CREDENTIALS,
-            verify_ssl_certs=GIGACHAT_VERIFY_SSL,
-            model=MODEL_NAME
-        )
-    return _client
+@lru_cache(maxsize=2)
+def _create_client(credentials: str, verify_ssl: bool, model: str) -> GigaChat:
+    return GigaChat(
+        credentials=credentials,
+        verify_ssl_certs=verify_ssl,
+        model=model,
+    )
 
 
-def call_llm(prompt: str, temperature: float = 0.0, max_tokens: int = 700) -> str:
-    client = get_client()
+def get_client(settings: Settings | None = None) -> GigaChat:
+    settings = settings or get_settings()
+    return _create_client(
+        settings.require_gigachat_credentials(),
+        settings.gigachat_verify_ssl,
+        settings.gigachat_model,
+    )
+
+
+def call_llm(
+    prompt: str,
+    temperature: float = 0.0,
+    max_tokens: int = 700,
+    *,
+    settings: Settings | None = None,
+) -> str:
+    if not prompt.strip():
+        raise ValueError("prompt must not be empty")
+    if not 0.0 <= temperature <= 2.0:
+        raise ValueError("temperature must be between 0 and 2")
+    if max_tokens <= 0:
+        raise ValueError("max_tokens must be positive")
+
+    settings = settings or get_settings()
+    client = get_client(settings)
 
     request = Chat(
         messages=[
@@ -28,8 +47,10 @@ def call_llm(prompt: str, temperature: float = 0.0, max_tokens: int = 700) -> st
         ],
         temperature=temperature,
         max_tokens=max_tokens,
-        model=MODEL_NAME
+        model=settings.gigachat_model,
     )
 
     response = client.chat(request)
+    if not response.choices or not response.choices[0].message.content:
+        raise RuntimeError("GigaChat returned an empty response")
     return response.choices[0].message.content.strip()

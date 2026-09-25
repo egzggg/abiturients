@@ -1,64 +1,63 @@
-
 import asyncio
+import logging
+from functools import lru_cache
+from typing import Callable
 
+from config import get_settings
+from llm.giga_generator import generate_rag_answer
 from telegram import Update
 from telegram.ext import (
     Application,
     CommandHandler,
-    MessageHandler,
     ContextTypes,
-    filters
+    MessageHandler,
+    filters,
 )
-
 from top_chunks.retriever import TopChunksRetriever
-from llm.giga_generator import generate_rag_answer
+from utils.logger import log_chunks, log_question
 
-from utils.logger import (
-    log_question,
-    log_chunks
-)
-
-
-TOKEN = "8101923743:AAEMx1AzEu6kvzqzg6zJ62D6TZIjQoHBVRM"
+logger = logging.getLogger(__name__)
 
 
 # ---------------- RAG PIPELINE ----------------
 
-def run_rag(question: str) -> str:
+@lru_cache(maxsize=1)
+def get_retriever() -> TopChunksRetriever:
+    """Load the embedding model once per process, not once per message."""
+    return TopChunksRetriever()
 
-    # save question
+
+def run_rag(
+    question: str,
+    *,
+    retriever: TopChunksRetriever | None = None,
+    answer_generator: Callable[..., str] = generate_rag_answer,
+) -> str:
+    question = question.strip()
+    if not question:
+        return "Пожалуйста, задайте непустой вопрос."
+
     log_question(question)
-
-    retriever = TopChunksRetriever()
-
-    # retrieve chunks
+    retriever = retriever or get_retriever()
     chunks = retriever.get_top_chunks(question)
-
-    # save retrieved chunks
-    
-
-    # sort by score
     chunks = sorted(
         chunks,
         key=lambda x: x.get("score", 0),
-        reverse=True
+        reverse=True,
     )[:5]
     log_chunks(question, chunks)
 
-    # generate answer
-    return generate_rag_answer(
-        query=question,
-        chunks=chunks
-    )
+    return answer_generator(query=question, chunks=chunks)
 
 
 # ---------------- HANDLERS ----------------
 
 async def start(
     update: Update,
-    context: ContextTypes.DEFAULT_TYPE
-):
-
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    if update.message is None:
+        return
     await update.message.reply_text(
         "Привет 👋 Я RAG-бот по поступлению. Задай вопрос."
     )
@@ -66,38 +65,42 @@ async def start(
 
 async def handle_message(
     update: Update,
-    context: ContextTypes.DEFAULT_TYPE
-):
-
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    if update.message is None or update.message.text is None:
+        return
     user_text = update.message.text
 
-    await update.message.reply_text(
-        "⏳ Думаю..."
-    )
+    await update.message.reply_text("⏳ Думаю...")
 
     try:
-        answer = run_rag(user_text)
+        # Retrieval and LLM clients are synchronous; keep the bot event loop free.
+        answer = await asyncio.to_thread(run_rag, user_text)
 
-    except Exception as e:
-        answer = f"Ошибка: {str(e)}"
+    except Exception:
+        logger.exception("Failed to answer Telegram message")
+        answer = "Не удалось обработать вопрос. Попробуйте ещё раз позже."
 
     await update.message.reply_text(answer)
 
 
 # ---------------- MAIN ----------------
 
-def main():
-
-    app = Application.builder().token(TOKEN).build()
-
-    app.add_handler(
-        CommandHandler("start", start)
+def main() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
+    token = get_settings().require_telegram_token()
+
+    app = Application.builder().token(token).build()
+
+    app.add_handler(CommandHandler("start", start))
 
     app.add_handler(
         MessageHandler(
             filters.TEXT & ~filters.COMMAND,
-            handle_message
+            handle_message,
         )
     )
 

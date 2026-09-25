@@ -1,17 +1,17 @@
 # utils/logger.py
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
+from config import get_settings
 
-# logs directory
-LOGS_DIR = Path("logs")
-LOGS_DIR.mkdir(exist_ok=True)
 
-# files
-QUESTIONS_LOG = LOGS_DIR / "questions.jsonl"
-CHUNKS_LOG = LOGS_DIR / "chunks.jsonl"
+def _append_jsonl(path: Path, data: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    line = json.dumps(data, ensure_ascii=False) + "\n"
+    with path.open("a", encoding="utf-8") as file:
+        file.write(line)
 
 
 def log_question(question: str) -> None:
@@ -20,13 +20,10 @@ def log_question(question: str) -> None:
     """
 
     data = {
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "question": question
     }
-
-    with open(QUESTIONS_LOG, "a", encoding="utf-8") as f:
-        f.write(json.dumps(data, ensure_ascii=False))
-        f.write("\n")
+    _append_jsonl(get_settings().log_dir / "questions.jsonl", data)
 
 
 def log_chunks(question: str, chunks: list[dict]) -> None:
@@ -35,12 +32,8 @@ def log_chunks(question: str, chunks: list[dict]) -> None:
     """
 
     data = {
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "question": question,
         "chunks": chunks
     }
-
-    with open(CHUNKS_LOG, "a", encoding="utf-8") as f:
-        f.write(json.dumps(data, ensure_ascii=False))
-        f.write("\n")
-
+    _append_jsonl(get_settings().log_dir / "chunks.jsonl", data)
