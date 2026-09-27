@@ -69,13 +69,11 @@ make evalEmbeddings
 make evalEmbeddings EVAL_ARGS="--datasets golden"
 ```
 
-Для одновременного сравнения E5, BGE-M3 и GTE установите дополнительный backend
-и перечислите модели:
-
-```bash
-.venv/bin/pip install sentence-transformers
-make evalEmbeddings EVAL_ARGS="--models intfloat/multilingual-e5-large,intfloat/multilingual-e5-base,BAAI/bge-m3,Alibaba-NLP/gte-multilingual-base"
-```
+Для текущего сравнения оставлены исходная `intfloat/multilingual-e5-large`,
+`gte-Qwen2-1.5B-instruct`, `Qwen3-Embedding-4B` и `Qwen3-Embedding-8B`.
+Отдельные локальные тесты GTE запускаются через `eval.evaluate_gte_embedding`,
+а тесты GGUF-моделей — через `eval.evaluate_gguf_embeddings` при работающем
+`llama.cpp`-сервере. Их JSON-результаты сохраняются в `eval/results/`.
 
 E5 оценивается с теми же префиксами, усреднением токенов и нормализацией, что и
 производственный `Embedder`. SQuAD измеряет поиск по англоязычным абзацам; для

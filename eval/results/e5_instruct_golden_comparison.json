@@ -1,0 +1,1750 @@
+{
+  "created_at_utc": "2026-09-27T16:09:34.546553+00:00",
+  "model": "intfloat/multilingual-e5-large-instruct",
+  "backend": "sentence-transformers PyTorch FP32 CPU",
+  "dataset": "abitura_golden",
+  "query_count": 50,
+  "document_count": 151,
+  "dimension": 1024,
+  "document_embedding_seconds": 11.659,
+  "variants": {
+    "web_task_prompt": {
+      "query_embedding_seconds": 2.526,
+      "metrics": {
+        "hit_rate@1": 0.56,
+        "recall@1": 0.56,
+        "mrr@1": 0.56,
+        "hit_rate@4": 0.86,
+        "recall@4": 0.86,
+        "mrr@4": 0.6766666666666665,
+        "hit_rate@5": 0.9,
+        "recall@5": 0.9,
+        "mrr@5": 0.6846666666666665,
+        "hit_rate@10": 0.96,
+        "recall@10": 0.96,
+        "mrr@10": 0.6933571428571428
+      },
+      "rows": [
+        {
+          "id": "univ_001",
+          "question": "С какого года ведёт историю Волгатех и как назывался университет сначала?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_8",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_9",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "univ_002",
+          "question": "Сколько институтов и факультетов в структуре Волгатеха?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_9",
+            "About_university.md::about_university_8",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "Targeted_admission.md::chunk_11",
+            "About_university.md::about_university_3",
+            "09.04.04-software-engineering.md::chunk_1"
+          ]
+        },
+        {
+          "id": "univ_003",
+          "question": "Сколько учебных корпусов и общежитий у студгородка ПГТУ?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_3",
+            "About_university.md::about_university_5",
+            "About_university.md::about_university_6",
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_7",
+            "Targeted_admission.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "Targeted_admission.md::chunk_11"
+          ]
+        },
+        {
+          "id": "univ_004",
+          "question": "С вузами и компаниями каких стран сотрудничает Волгатех?",
+          "relevant_rank": 2,
+          "top10": [
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_6",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_9",
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_8",
+            "About_university.md::about_university_5",
+            "38.03.01-economics.md::chunk_13",
+            "38.04.01-economics.md::chunk_17"
+          ]
+        },
+        {
+          "id": "univ_005",
+          "question": "В каких областях у Волгатеха есть научные разработки и центры?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_9",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_8",
+            "About_university.md::about_university_5",
+            "About_university.md::about_university_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_5",
+            "Targeted_admission.md::chunk_11",
+            "38.05.01-economic-security.md::chunk_6"
+          ]
+        },
+        {
+          "id": "docs_001",
+          "question": "Что обычно нужно подать для поступления на программы высшего образования?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_2",
+            "Documents_for_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_1",
+            "Documents_for_admission.md::chunk_2",
+            "Documents_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_6"
+          ]
+        },
+        {
+          "id": "docs_002",
+          "question": "Какие дополнительные бумаги могут понадобиться при поступлении по квоте или с особыми условиями?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_2",
+            "Documents_for_admission.md::chunk_6",
+            "documents_required_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_4",
+            "Documents_for_admission.md::chunk_4",
+            "Documents_for_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_3",
+            "Targeted_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_2"
+          ]
+        },
+        {
+          "id": "docs_003",
+          "question": "Что подготовить для поступления в магистратуру?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_2",
+            "Targeted_admission.md::chunk_8",
+            "Documents_for_admission.md::chunk_5",
+            "Documents_for_admission.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_5",
+            "documents_required_for_admission.md::chunk_6",
+            "documents_required_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_5",
+            "Targeted_eucation_university.md::chunk_6"
+          ]
+        },
+        {
+          "id": "docs_004",
+          "question": "Какие документы просят при поступлении в колледж СПО?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_4",
+            "Documents_for_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_1",
+            "Documents_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_6",
+            "Targeted_educatinon_SPO.md::chunk_3"
+          ]
+        },
+        {
+          "id": "docs_005",
+          "question": "Какой комплект документов нужен для поступления в аспирантуру?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_5",
+            "documents_required_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_5"
+          ]
+        },
+        {
+          "id": "docs_006",
+          "question": "Когда целевику нужно подать заявку на договор, если он поступает через Госуслуги?",
+          "relevant_rank": 2,
+          "top10": [
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_8",
+            "Targeted_educatinon_SPO.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6"
+          ]
+        },
+        {
+          "id": "target_001",
+          "question": "Что получает студент при целевом обучении и сколько потом нужно отработать?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_4",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_2"
+          ]
+        },
+        {
+          "id": "target_004",
+          "question": "Как податься на целевое через ЕПГУ?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_admission.md::chunk_1",
+            "Targeted_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_11",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_admission.md::chunk_9"
+          ]
+        },
+        {
+          "id": "target_005",
+          "question": "Если подаюсь лично или по почте, где искать предложения по целевому обучению?",
+          "relevant_rank": 5,
+          "top10": [
+            "Targeted_admission.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_2",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_2",
+            "Targeted_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_12",
+            "Targeted_admission.md::chunk_3"
+          ]
+        },
+        {
+          "id": "target_006",
+          "question": "Что будет, если не пройти отдельный конкурс на целевое место?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_admission.md::chunk_9",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_3",
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_9",
+            "Targeted_admission.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_12",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6"
+          ]
+        },
+        {
+          "id": "target_007",
+          "question": "Кто может быть заказчиком целевого обучения?",
+          "relevant_rank": 17,
+          "top10": [
+            "Targeted_admission.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_12",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_2",
+            "Targeted_admission.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_3"
+          ]
+        },
+        {
+          "id": "target_009",
+          "question": "На какие уровни образования распространяется целевое обучение в вузе?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_eucation_university.md::chunk_1",
+            "Targeted_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_admission.md::chunk_1",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_admission.md::chunk_9",
+            "Documents_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_7"
+          ]
+        },
+        {
+          "id": "target_010",
+          "question": "Можно выбрать несколько конкурсов на целевую квоту или только один?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_eucation_university.md::chunk_3",
+            "Targeted_admission.md::chunk_9",
+            "Targeted_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_9",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_admission.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_6"
+          ]
+        },
+        {
+          "id": "target_011",
+          "question": "Когда нужно заключить договор о целевом обучении после поступления?",
+          "relevant_rank": 3,
+          "top10": [
+            "Targeted_educatinon_SPO.md::chunk_4",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_11",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Documents_for_admission.md::chunk_2",
+            "Targeted_admission.md::chunk_4"
+          ]
+        },
+        {
+          "id": "target_012",
+          "question": "Как подать заявку на целевое без Госуслуг?",
+          "relevant_rank": 3,
+          "top10": [
+            "Targeted_admission.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_8",
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_3"
+          ]
+        },
+        {
+          "id": "target_013",
+          "question": "Где публикуют предложения о целевом обучении для поступающих в СПО?",
+          "relevant_rank": 6,
+          "top10": [
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_educatinon_SPO.md::chunk_1",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_educatinon_SPO.md::chunk_2",
+            "Documents_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_12",
+            "documents_required_for_admission.md::chunk_7"
+          ]
+        },
+        {
+          "id": "target_014",
+          "question": "Когда подписывают договор о целевом обучении для программы СПО?",
+          "relevant_rank": 3,
+          "top10": [
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_educatinon_SPO.md::chunk_4",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_3",
+            "Targeted_educatinon_SPO.md::chunk_1",
+            "Documents_for_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_7"
+          ]
+        },
+        {
+          "id": "target_015",
+          "question": "Сколько выпускнику СПО нужно работать по договору целевого обучения?",
+          "relevant_rank": 2,
+          "top10": [
+            "Targeted_admission.md::chunk_3",
+            "Targeted_educatinon_SPO.md::chunk_5",
+            "Documents_for_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_educatinon_SPO.md::chunk_4"
+          ]
+        },
+        {
+          "id": "program_001",
+          "question": "Какой профиль у бакалавриата 09.03.03 и сколько длится очное обучение?",
+          "relevant_rank": 3,
+          "top10": [
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "10.05.03-information-security.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "38.04.01-economics.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_002",
+          "question": "Чему учатся на прикладной информатике в экономике помимо программирования?",
+          "relevant_rank": 5,
+          "top10": [
+            "09.03.03-applied-informatics-in-economics.md::chunk_3",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_6",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.04.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_9"
+          ]
+        },
+        {
+          "id": "program_003",
+          "question": "Какие ИТ-дисциплины входят в программу прикладной информатики?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.03.03-applied-informatics-in-economics.md::chunk_3",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_2",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_4",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_6",
+            "38.04.01-economics.md::chunk_8"
+          ]
+        },
+        {
+          "id": "program_004",
+          "question": "Какие экономические предметы изучают на направлении 09.03.03?",
+          "relevant_rank": 4,
+          "top10": [
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "38.04.01-economics.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_11",
+            "38.04.01-economics.md::chunk_15",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_8",
+            "38.05.01-economic-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_006",
+          "question": "На каких формах и сколько учатся на бакалавриате 38.03.01 «Экономика»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_1",
+            "38.04.01-economics.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_2",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "38.04.01-economics.md::chunk_6"
+          ]
+        },
+        {
+          "id": "program_007",
+          "question": "Какие профили доступны на бакалавриате по экономике?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_9",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_18",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_008",
+          "question": "Что изучают на профиле «Финансы и кредит»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_4",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_18",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_14",
+            "38.03.01-economics.md::chunk_8"
+          ]
+        },
+        {
+          "id": "program_009",
+          "question": "Какие навыки получают студенты профиля «Финансы и кредит»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_4",
+            "38.03.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_9",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_22",
+            "38.03.01-economics.md::chunk_17",
+            "38.03.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_7"
+          ]
+        },
+        {
+          "id": "program_010",
+          "question": "Куда могут пойти работать выпускники профиля «Экономика и управление в организациях»?",
+          "relevant_rank": 4,
+          "top10": [
+            "38.03.01-economics.md::chunk_12",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_9",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_5",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_23",
+            "38.03.01-economics.md::chunk_8",
+            "38.03.01-economics.md::chunk_2",
+            "38.05.01-economic-security.md::chunk_4"
+          ]
+        },
+        {
+          "id": "program_011",
+          "question": "Какие темы изучают на профиле «Бухгалтерский учёт, анализ и аудит»?",
+          "relevant_rank": 3,
+          "top10": [
+            "38.03.01-economics.md::chunk_18",
+            "38.03.01-economics.md::chunk_14",
+            "38.03.01-economics.md::chunk_17",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_15",
+            "38.04.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_4",
+            "38.03.01-economics.md::chunk_21",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_3"
+          ]
+        },
+        {
+          "id": "program_012",
+          "question": "Какие компетенции получают на профиле экономики для малого и среднего бизнеса?",
+          "relevant_rank": 2,
+          "top10": [
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_22",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_9",
+            "38.03.01-economics.md::chunk_23",
+            "38.04.01-economics.md::chunk_14",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_4",
+            "38.04.01-economics.md::chunk_13"
+          ]
+        },
+        {
+          "id": "program_013",
+          "question": "Какие формы обучения и сроки есть в магистратуре 38.04.01 «Экономика»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "38.04.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_6",
+            "Targeted_admission.md::chunk_8",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_014",
+          "question": "Для кого предназначена программа магистратуры «Учёт, анализ и аудит»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_14",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_10",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_17",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.04.01-economics.md::chunk_13",
+            "38.04.01-economics.md::chunk_16"
+          ]
+        },
+        {
+          "id": "program_015",
+          "question": "Какие задачи можно решать после программы по ИИ в финансово-экономических системах?",
+          "relevant_rank": 3,
+          "top10": [
+            "38.04.01-economics.md::chunk_9",
+            "38.04.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_6",
+            "38.03.01-economics.md::chunk_10",
+            "38.04.01-economics.md::chunk_16",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "09.04.04-software-engineering.md::chunk_3",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "38.04.01-economics.md::chunk_21"
+          ]
+        },
+        {
+          "id": "program_016",
+          "question": "Какие дисциплины есть в программе по искусственному интеллекту в финансово-экономических системах?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_6",
+            "38.04.01-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_9",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_4",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_2",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "38.04.01-economics.md::chunk_15"
+          ]
+        },
+        {
+          "id": "program_017",
+          "question": "Кем работают выпускники магистратуры «Экономика закупок»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_20",
+            "38.04.01-economics.md::chunk_18",
+            "38.03.01-economics.md::chunk_12",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_23",
+            "38.05.01-economic-security.md::chunk_4",
+            "38.04.01-economics.md::chunk_21",
+            "38.04.01-economics.md::chunk_22",
+            "38.04.01-economics.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_5"
+          ]
+        },
+        {
+          "id": "program_018",
+          "question": "Какие профессиональные задачи связаны с программой «Экономика закупок»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_21",
+            "38.04.01-economics.md::chunk_18",
+            "38.04.01-economics.md::chunk_20",
+            "38.04.01-economics.md::chunk_22",
+            "38.04.01-economics.md::chunk_19",
+            "38.03.01-economics.md::chunk_10",
+            "38.04.01-economics.md::chunk_16",
+            "38.04.01-economics.md::chunk_14",
+            "38.04.01-economics.md::chunk_13",
+            "38.04.01-economics.md::chunk_15"
+          ]
+        },
+        {
+          "id": "program_019",
+          "question": "Какой профиль и срок обучения у специальности 38.05.01?",
+          "relevant_rank": 3,
+          "top10": [
+            "38.04.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_1",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "10.05.03-information-security.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_020",
+          "question": "Что означает экономическая безопасность в описании программы ПГТУ?",
+          "relevant_rank": 2,
+          "top10": [
+            "38.05.01-economic-security.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_2",
+            "38.04.01-economics.md::chunk_21",
+            "38.05.01-economic-security.md::chunk_4",
+            "38.05.01-economic-security.md::chunk_5",
+            "About_university.md::about_university_7",
+            "38.03.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_14",
+            "38.04.01-economics.md::chunk_22",
+            "38.04.01-economics.md::chunk_13"
+          ]
+        },
+        {
+          "id": "program_021",
+          "question": "В каких сферах могут работать выпускники экономической безопасности?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.05.01-economic-security.md::chunk_4",
+            "38.05.01-economic-security.md::chunk_3",
+            "38.05.01-economic-security.md::chunk_1",
+            "38.03.01-economics.md::chunk_19",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_12",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_23",
+            "38.04.01-economics.md::chunk_20"
+          ]
+        },
+        {
+          "id": "program_022",
+          "question": "Где проходят производственную практику студенты экономической безопасности?",
+          "relevant_rank": 2,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_6",
+            "38.05.01-economic-security.md::chunk_6",
+            "38.05.01-economic-security.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_4",
+            "38.04.01-economics.md::chunk_5",
+            "38.05.01-economic-security.md::chunk_5",
+            "About_university.md::about_university_5",
+            "38.05.01-economic-security.md::chunk_3",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_10"
+          ]
+        },
+        {
+          "id": "program_023",
+          "question": "Какие профессиональные задачи решают магистры по прикладной информатике в управлении бизнес-процессами?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_6",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_3",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_10",
+            "09.03.03-applied-informatics-in-economics.md::chunk_3",
+            "38.04.01-economics.md::chunk_9"
+          ]
+        },
+        {
+          "id": "program_024",
+          "question": "Чему учатся по управлению информационными ресурсами в магистратуре 09.04.03?",
+          "relevant_rank": 8,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "10.05.03-information-security.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_3",
+            "09.03.04-software-engineering.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4"
+          ]
+        },
+        {
+          "id": "program_025",
+          "question": "Какие направления работы доступны после магистратуры по ИТ в управлении бизнес-процессами?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_5",
+            "38.04.01-economics.md::chunk_9",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_23",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "38.04.01-economics.md::chunk_3",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4",
+            "38.04.01-economics.md::chunk_16"
+          ]
+        },
+        {
+          "id": "program_026",
+          "question": "В каких организациях проходят практику студенты магистратуры 09.04.03?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_6",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "About_university.md::about_university_5",
+            "38.04.01-economics.md::chunk_5",
+            "38.04.01-economics.md::chunk_12",
+            "About_university.md::about_university_6",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_6",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_027",
+          "question": "Какие технологии изучают в магистратуре «Интеллектуальные системы»?",
+          "relevant_rank": 11,
+          "top10": [
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_4",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_5",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_2",
+            "38.04.01-economics.md::chunk_6",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_2",
+            "38.04.01-economics.md::chunk_8",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_029",
+          "question": "Чем занимаются студенты специалитета 10.05.03 по информационной безопасности?",
+          "relevant_rank": 7,
+          "top10": [
+            "10.05.03-information-security.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1",
+            "10.04.01-information-security.md::chunk_3",
+            "10.04.01-information-security.md::chunk_2",
+            "38.05.01-economic-security.md::chunk_1",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "10.05.03-information-security.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2"
+          ]
+        }
+      ]
+    },
+    "applicant_task_prompt": {
+      "query_embedding_seconds": 2.577,
+      "metrics": {
+        "hit_rate@1": 0.58,
+        "recall@1": 0.58,
+        "mrr@1": 0.58,
+        "hit_rate@4": 0.88,
+        "recall@4": 0.88,
+        "mrr@4": 0.6966666666666665,
+        "hit_rate@5": 0.9,
+        "recall@5": 0.9,
+        "mrr@5": 0.7006666666666667,
+        "hit_rate@10": 0.98,
+        "recall@10": 0.98,
+        "mrr@10": 0.7126904761904761
+      },
+      "rows": [
+        {
+          "id": "univ_001",
+          "question": "С какого года ведёт историю Волгатех и как назывался университет сначала?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_8",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_9",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "univ_002",
+          "question": "Сколько институтов и факультетов в структуре Волгатеха?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_9",
+            "About_university.md::about_university_8",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "Targeted_admission.md::chunk_11",
+            "09.04.04-software-engineering.md::chunk_1",
+            "About_university.md::about_university_3"
+          ]
+        },
+        {
+          "id": "univ_003",
+          "question": "Сколько учебных корпусов и общежитий у студгородка ПГТУ?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_3",
+            "About_university.md::about_university_6",
+            "About_university.md::about_university_5",
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_7",
+            "Targeted_admission.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "Targeted_admission.md::chunk_11"
+          ]
+        },
+        {
+          "id": "univ_004",
+          "question": "С вузами и компаниями каких стран сотрудничает Волгатех?",
+          "relevant_rank": 2,
+          "top10": [
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_6",
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_9",
+            "About_university.md::about_university_1",
+            "38.03.01-economics.md::chunk_13",
+            "38.04.01-economics.md::chunk_17",
+            "About_university.md::about_university_8",
+            "About_university.md::about_university_5"
+          ]
+        },
+        {
+          "id": "univ_005",
+          "question": "В каких областях у Волгатеха есть научные разработки и центры?",
+          "relevant_rank": 1,
+          "top10": [
+            "About_university.md::about_university_4",
+            "About_university.md::about_university_2",
+            "About_university.md::about_university_9",
+            "About_university.md::about_university_7",
+            "About_university.md::about_university_8",
+            "About_university.md::about_university_1",
+            "About_university.md::about_university_5",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_5",
+            "Targeted_admission.md::chunk_11",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_6"
+          ]
+        },
+        {
+          "id": "docs_001",
+          "question": "Что обычно нужно подать для поступления на программы высшего образования?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_1",
+            "Documents_for_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_2",
+            "Documents_for_admission.md::chunk_5",
+            "Documents_for_admission.md::chunk_2",
+            "Documents_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_6"
+          ]
+        },
+        {
+          "id": "docs_002",
+          "question": "Какие дополнительные бумаги могут понадобиться при поступлении по квоте или с особыми условиями?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_2",
+            "Documents_for_admission.md::chunk_6",
+            "documents_required_for_admission.md::chunk_5",
+            "Documents_for_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_4"
+          ]
+        },
+        {
+          "id": "docs_003",
+          "question": "Что подготовить для поступления в магистратуру?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_2",
+            "Documents_for_admission.md::chunk_5",
+            "Documents_for_admission.md::chunk_1",
+            "Targeted_admission.md::chunk_8",
+            "documents_required_for_admission.md::chunk_6",
+            "documents_required_for_admission.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_5",
+            "documents_required_for_admission.md::chunk_5",
+            "Documents_for_admission.md::chunk_4"
+          ]
+        },
+        {
+          "id": "docs_004",
+          "question": "Какие документы просят при поступлении в колледж СПО?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_4",
+            "Documents_for_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_5",
+            "Documents_for_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_1",
+            "Documents_for_admission.md::chunk_5"
+          ]
+        },
+        {
+          "id": "docs_005",
+          "question": "Какой комплект документов нужен для поступления в аспирантуру?",
+          "relevant_rank": 1,
+          "top10": [
+            "Documents_for_admission.md::chunk_5",
+            "documents_required_for_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_5",
+            "documents_required_for_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_4",
+            "Documents_for_admission.md::chunk_2"
+          ]
+        },
+        {
+          "id": "docs_006",
+          "question": "Когда целевику нужно подать заявку на договор, если он поступает через Госуслуги?",
+          "relevant_rank": 2,
+          "top10": [
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_admission.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_6",
+            "Targeted_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_8"
+          ]
+        },
+        {
+          "id": "target_001",
+          "question": "Что получает студент при целевом обучении и сколько потом нужно отработать?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "documents_required_for_admission.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_1",
+            "Targeted_admission.md::chunk_2",
+            "Documents_for_admission.md::chunk_2"
+          ]
+        },
+        {
+          "id": "target_004",
+          "question": "Как податься на целевое через ЕПГУ?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_admission.md::chunk_1",
+            "Targeted_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_11",
+            "Targeted_admission.md::chunk_5",
+            "Targeted_educatinon_SPO.md::chunk_3"
+          ]
+        },
+        {
+          "id": "target_005",
+          "question": "Если подаюсь лично или по почте, где искать предложения по целевому обучению?",
+          "relevant_rank": 4,
+          "top10": [
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_admission.md::chunk_6",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_2",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_admission.md::chunk_3",
+            "Targeted_admission.md::chunk_5"
+          ]
+        },
+        {
+          "id": "target_006",
+          "question": "Что будет, если не пройти отдельный конкурс на целевое место?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_admission.md::chunk_9",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_3",
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_9",
+            "Targeted_eucation_university.md::chunk_6",
+            "Targeted_admission.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_11",
+            "Documents_for_admission.md::chunk_2"
+          ]
+        },
+        {
+          "id": "target_007",
+          "question": "Кто может быть заказчиком целевого обучения?",
+          "relevant_rank": 20,
+          "top10": [
+            "Targeted_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_3",
+            "Targeted_admission.md::chunk_6",
+            "Targeted_admission.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_2"
+          ]
+        },
+        {
+          "id": "target_009",
+          "question": "На какие уровни образования распространяется целевое обучение в вузе?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_eucation_university.md::chunk_1",
+            "Targeted_admission.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_2",
+            "Targeted_admission.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Documents_for_admission.md::chunk_2",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_9"
+          ]
+        },
+        {
+          "id": "target_010",
+          "question": "Можно выбрать несколько конкурсов на целевую квоту или только один?",
+          "relevant_rank": 1,
+          "top10": [
+            "Targeted_eucation_university.md::chunk_3",
+            "Targeted_admission.md::chunk_9",
+            "Targeted_admission.md::chunk_4",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_9",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_educatinon_SPO.md::chunk_6"
+          ]
+        },
+        {
+          "id": "target_011",
+          "question": "Когда нужно заключить договор о целевом обучении после поступления?",
+          "relevant_rank": 5,
+          "top10": [
+            "Targeted_educatinon_SPO.md::chunk_4",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_3",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_eucation_university.md::chunk_11",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Documents_for_admission.md::chunk_2",
+            "Targeted_admission.md::chunk_4"
+          ]
+        },
+        {
+          "id": "target_012",
+          "question": "Как подать заявку на целевое без Госуслуг?",
+          "relevant_rank": 3,
+          "top10": [
+            "Targeted_admission.md::chunk_6",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_eucation_university.md::chunk_8",
+            "Documents_for_admission.md::chunk_7",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_admission.md::chunk_5",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Documents_for_admission.md::chunk_2"
+          ]
+        },
+        {
+          "id": "target_013",
+          "question": "Где публикуют предложения о целевом обучении для поступающих в СПО?",
+          "relevant_rank": 8,
+          "top10": [
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_educatinon_SPO.md::chunk_1",
+            "Targeted_eucation_university.md::chunk_2",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_4",
+            "Documents_for_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_2",
+            "Targeted_admission.md::chunk_1",
+            "documents_required_for_admission.md::chunk_7"
+          ]
+        },
+        {
+          "id": "target_014",
+          "question": "Когда подписывают договор о целевом обучении для программы СПО?",
+          "relevant_rank": 3,
+          "top10": [
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "documents_required_for_admission.md::chunk_7",
+            "Targeted_admission.md::chunk_3",
+            "Targeted_educatinon_SPO.md::chunk_1",
+            "Documents_for_admission.md::chunk_4",
+            "Targeted_admission.md::chunk_4"
+          ]
+        },
+        {
+          "id": "target_015",
+          "question": "Сколько выпускнику СПО нужно работать по договору целевого обучения?",
+          "relevant_rank": 2,
+          "top10": [
+            "Targeted_admission.md::chunk_3",
+            "Targeted_educatinon_SPO.md::chunk_5",
+            "Documents_for_admission.md::chunk_4",
+            "Targeted_educatinon_SPO.md::chunk_6",
+            "Targeted_educatinon_SPO.md::chunk_1",
+            "documents_required_for_admission.md::chunk_7",
+            "Documents_for_admission.md::chunk_7",
+            "Targeted_educatinon_SPO.md::chunk_3",
+            "Targeted_admission.md::chunk_4",
+            "Targeted_eucation_university.md::chunk_7"
+          ]
+        },
+        {
+          "id": "program_001",
+          "question": "Какой профиль у бакалавриата 09.03.03 и сколько длится очное обучение?",
+          "relevant_rank": 3,
+          "top10": [
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "10.05.03-information-security.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "38.04.01-economics.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_002",
+          "question": "Чему учатся на прикладной информатике в экономике помимо программирования?",
+          "relevant_rank": 3,
+          "top10": [
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.03.03-applied-informatics-in-economics.md::chunk_3",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_6",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.04.01-economics.md::chunk_8",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_7"
+          ]
+        },
+        {
+          "id": "program_003",
+          "question": "Какие ИТ-дисциплины входят в программу прикладной информатики?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.03.03-applied-informatics-in-economics.md::chunk_3",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_4",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_6",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_2",
+            "38.04.01-economics.md::chunk_8"
+          ]
+        },
+        {
+          "id": "program_004",
+          "question": "Какие экономические предметы изучают на направлении 09.03.03?",
+          "relevant_rank": 2,
+          "top10": [
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_11",
+            "38.04.01-economics.md::chunk_1",
+            "38.04.01-economics.md::chunk_15",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_22"
+          ]
+        },
+        {
+          "id": "program_006",
+          "question": "На каких формах и сколько учатся на бакалавриате 38.03.01 «Экономика»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_1",
+            "38.04.01-economics.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_1",
+            "38.04.01-economics.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_2",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "38.03.01-economics.md::chunk_11",
+            "09.03.04-software-engineering.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_007",
+          "question": "Какие профили доступны на бакалавриате по экономике?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_9",
+            "38.03.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_18",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_8"
+          ]
+        },
+        {
+          "id": "program_008",
+          "question": "Что изучают на профиле «Финансы и кредит»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_4",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_18",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_14",
+            "38.04.01-economics.md::chunk_2"
+          ]
+        },
+        {
+          "id": "program_009",
+          "question": "Какие навыки получают студенты профиля «Финансы и кредит»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_4",
+            "38.03.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_9",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_22",
+            "38.03.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_17",
+            "38.03.01-economics.md::chunk_7"
+          ]
+        },
+        {
+          "id": "program_010",
+          "question": "Куда могут пойти работать выпускники профиля «Экономика и управление в организациях»?",
+          "relevant_rank": 4,
+          "top10": [
+            "38.03.01-economics.md::chunk_12",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_9",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_5",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_8",
+            "38.03.01-economics.md::chunk_23",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_19"
+          ]
+        },
+        {
+          "id": "program_011",
+          "question": "Какие темы изучают на профиле «Бухгалтерский учёт, анализ и аудит»?",
+          "relevant_rank": 3,
+          "top10": [
+            "38.03.01-economics.md::chunk_18",
+            "38.03.01-economics.md::chunk_14",
+            "38.03.01-economics.md::chunk_17",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_15",
+            "38.04.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_4",
+            "38.03.01-economics.md::chunk_21",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_3"
+          ]
+        },
+        {
+          "id": "program_012",
+          "question": "Какие компетенции получают на профиле экономики для малого и среднего бизнеса?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.03.01-economics.md::chunk_22",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_9",
+            "38.04.01-economics.md::chunk_14",
+            "38.03.01-economics.md::chunk_11",
+            "38.03.01-economics.md::chunk_7",
+            "38.03.01-economics.md::chunk_23",
+            "38.03.01-economics.md::chunk_4",
+            "38.04.01-economics.md::chunk_15"
+          ]
+        },
+        {
+          "id": "program_013",
+          "question": "Какие формы обучения и сроки есть в магистратуре 38.04.01 «Экономика»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "38.04.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_6",
+            "Targeted_admission.md::chunk_8",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_014",
+          "question": "Для кого предназначена программа магистратуры «Учёт, анализ и аудит»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_14",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_2",
+            "38.03.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_17",
+            "38.03.01-economics.md::chunk_18",
+            "38.04.01-economics.md::chunk_10",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "38.03.01-economics.md::chunk_7"
+          ]
+        },
+        {
+          "id": "program_015",
+          "question": "Какие задачи можно решать после программы по ИИ в финансово-экономических системах?",
+          "relevant_rank": 3,
+          "top10": [
+            "38.04.01-economics.md::chunk_9",
+            "38.04.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_6",
+            "38.03.01-economics.md::chunk_10",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_4"
+          ]
+        },
+        {
+          "id": "program_016",
+          "question": "Какие дисциплины есть в программе по искусственному интеллекту в финансово-экономических системах?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_6",
+            "38.04.01-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_9",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_4",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_3",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_2"
+          ]
+        },
+        {
+          "id": "program_017",
+          "question": "Кем работают выпускники магистратуры «Экономика закупок»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_20",
+            "38.04.01-economics.md::chunk_18",
+            "38.03.01-economics.md::chunk_12",
+            "38.04.01-economics.md::chunk_16",
+            "38.04.01-economics.md::chunk_22",
+            "38.04.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_23",
+            "38.04.01-economics.md::chunk_2",
+            "38.05.01-economic-security.md::chunk_4",
+            "38.04.01-economics.md::chunk_14"
+          ]
+        },
+        {
+          "id": "program_018",
+          "question": "Какие профессиональные задачи связаны с программой «Экономика закупок»?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.04.01-economics.md::chunk_21",
+            "38.04.01-economics.md::chunk_18",
+            "38.04.01-economics.md::chunk_20",
+            "38.04.01-economics.md::chunk_22",
+            "38.04.01-economics.md::chunk_19",
+            "38.03.01-economics.md::chunk_10",
+            "38.04.01-economics.md::chunk_16",
+            "38.04.01-economics.md::chunk_14",
+            "38.03.01-economics.md::chunk_11",
+            "09.03.03-applied-informatics-in-economics.md::chunk_5"
+          ]
+        },
+        {
+          "id": "program_019",
+          "question": "Какой профиль и срок обучения у специальности 38.05.01?",
+          "relevant_rank": 3,
+          "top10": [
+            "38.04.01-economics.md::chunk_1",
+            "38.03.01-economics.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_1",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "10.05.03-information-security.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_020",
+          "question": "Что означает экономическая безопасность в описании программы ПГТУ?",
+          "relevant_rank": 2,
+          "top10": [
+            "38.05.01-economic-security.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_2",
+            "38.04.01-economics.md::chunk_21",
+            "38.03.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_22",
+            "38.05.01-economic-security.md::chunk_4",
+            "38.04.01-economics.md::chunk_2",
+            "38.04.01-economics.md::chunk_14",
+            "About_university.md::about_university_7",
+            "38.05.01-economic-security.md::chunk_5"
+          ]
+        },
+        {
+          "id": "program_021",
+          "question": "В каких сферах могут работать выпускники экономической безопасности?",
+          "relevant_rank": 1,
+          "top10": [
+            "38.05.01-economic-security.md::chunk_4",
+            "38.05.01-economic-security.md::chunk_1",
+            "38.05.01-economic-security.md::chunk_3",
+            "38.04.01-economics.md::chunk_16",
+            "38.03.01-economics.md::chunk_5",
+            "38.03.01-economics.md::chunk_19",
+            "38.04.01-economics.md::chunk_3",
+            "38.03.01-economics.md::chunk_12",
+            "38.03.01-economics.md::chunk_23",
+            "38.03.01-economics.md::chunk_3"
+          ]
+        },
+        {
+          "id": "program_022",
+          "question": "Где проходят производственную практику студенты экономической безопасности?",
+          "relevant_rank": 2,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_6",
+            "38.05.01-economic-security.md::chunk_6",
+            "38.05.01-economic-security.md::chunk_1",
+            "38.04.01-economics.md::chunk_5",
+            "38.05.01-economic-security.md::chunk_4",
+            "38.05.01-economic-security.md::chunk_5",
+            "About_university.md::about_university_5",
+            "38.05.01-economic-security.md::chunk_3",
+            "38.03.01-economics.md::chunk_10",
+            "38.03.01-economics.md::chunk_8"
+          ]
+        },
+        {
+          "id": "program_023",
+          "question": "Какие профессиональные задачи решают магистры по прикладной информатике в управлении бизнес-процессами?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.03.03-applied-informatics-in-economics.md::chunk_6",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_3",
+            "09.04.04-software-engineering.md::chunk_3",
+            "38.03.01-economics.md::chunk_10",
+            "38.04.01-economics.md::chunk_9"
+          ]
+        },
+        {
+          "id": "program_024",
+          "question": "Чему учатся по управлению информационными ресурсами в магистратуре 09.04.03?",
+          "relevant_rank": 6,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1",
+            "09.04.04-software-engineering.md::chunk_1",
+            "10.05.03-information-security.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_3",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "09.03.04-software-engineering.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_025",
+          "question": "Какие направления работы доступны после магистратуры по ИТ в управлении бизнес-процессами?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_5",
+            "09.03.03-applied-informatics-in-economics.md::chunk_7",
+            "38.04.01-economics.md::chunk_9",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4",
+            "38.03.01-economics.md::chunk_23",
+            "09.03.03-applied-informatics-in-economics.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_4",
+            "38.04.01-economics.md::chunk_3"
+          ]
+        },
+        {
+          "id": "program_026",
+          "question": "В каких организациях проходят практику студенты магистратуры 09.04.03?",
+          "relevant_rank": 1,
+          "top10": [
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_6",
+            "38.04.01-economics.md::chunk_5",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "About_university.md::about_university_5",
+            "About_university.md::about_university_6",
+            "38.04.01-economics.md::chunk_12",
+            "38.05.01-economic-security.md::chunk_6",
+            "38.04.01-economics.md::chunk_2",
+            "09.04.04-software-engineering.md::chunk_1",
+            "09.03.03-applied-informatics-in-economics.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_027",
+          "question": "Какие технологии изучают в магистратуре «Интеллектуальные системы»?",
+          "relevant_rank": 7,
+          "top10": [
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_4",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_5",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_4",
+            "38.04.01-economics.md::chunk_8",
+            "38.04.01-economics.md::chunk_6",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_3",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_2",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_2",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1"
+          ]
+        },
+        {
+          "id": "program_029",
+          "question": "Чем занимаются студенты специалитета 10.05.03 по информационной безопасности?",
+          "relevant_rank": 6,
+          "top10": [
+            "10.05.03-information-security.md::chunk_1",
+            "10.04.01-information-security.md::chunk_1",
+            "10.04.01-information-security.md::chunk_3",
+            "10.04.01-information-security.md::chunk_2",
+            "38.05.01-economic-security.md::chunk_1",
+            "10.05.03-information-security.md::chunk_2",
+            "09.03.01-informatics-and-computer-engineering.md::chunk_1",
+            "09.04.03-applied-informatics-information-technologies-in-business-process-management.md::chunk_1",
+            "09.04.01-informatics-and-computer-engineering-intelligent-systems.md::chunk_1",
+            "10.05.03-information-security.md::chunk_3"
+          ]
+        }
+      ]
+    }
+  }
+}

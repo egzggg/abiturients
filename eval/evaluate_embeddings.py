@@ -31,11 +31,16 @@ def resolve_model_source(model_name: str) -> str:
     try:
         from huggingface_hub import snapshot_download
 
-        return snapshot_download(repo_id=model_name, local_files_only=True)
+        snapshot = Path(snapshot_download(repo_id=model_name, local_files_only=True))
+        if any(snapshot.rglob("*.safetensors")) or any(
+            snapshot.rglob("pytorch_model.bin")
+        ):
+            return str(snapshot)
     except Exception:
         # An uncached model can still be fetched by the backend when Hub access
         # is available; this fallback also preserves local-directory support.
-        return model_name
+        pass
+    return model_name
 
 
 @dataclass

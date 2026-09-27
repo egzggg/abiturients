@@ -8,6 +8,25 @@ __pycache__/
 .venv/
 .venv-*/
 
+# Downloaded model weights and local model caches
+models/
+weights/
+checkpoints/
+.cache/
+hf_cache/
+*.safetensors
+*.gguf
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.tflite
+pytorch_model*.bin
+tf_model*.h5
+flax_model*.msgpack
+
+# JSON evaluation reports in eval/results/ are intentionally tracked.
+
 # Runtime data
 logs/*.jsonl
 

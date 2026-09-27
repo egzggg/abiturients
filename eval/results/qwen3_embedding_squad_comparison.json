@@ -1,0 +1,30 @@
+{
+  "created_at_utc": "2026-09-27T16:57:38.482361+00:00",
+  "model": "Qwen/Qwen3-Embedding-0.6B",
+  "backend": "sentence-transformers PyTorch FP32 CPU",
+  "dataset": "squad_dev",
+  "query_count": 10570,
+  "document_count": 2067,
+  "dimension": 1024,
+  "batch_size": 16,
+  "document_embedding_seconds": 709.895,
+  "variants": {
+    "default_query_prompt": {
+      "query_embedding_seconds": 568.859,
+      "metrics": {
+        "hit_rate@1": 0.7350047303689687,
+        "recall@1": 0.7350047303689687,
+        "mrr@1": 0.7350047303689687,
+        "hit_rate@4": 0.9064333017975402,
+        "recall@4": 0.9064333017975402,
+        "mrr@4": 0.8077814569536381,
+        "hit_rate@5": 0.9218543046357616,
+        "recall@5": 0.9218543046357616,
+        "mrr@5": 0.8108656575212811,
+        "hit_rate@10": 0.9578051087984862,
+        "recall@10": 0.9578051087984862,
+        "mrr@10": 0.8157730023576723
+      }
+    }
+  }
+}
