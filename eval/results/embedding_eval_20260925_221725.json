@@ -1,0 +1,55 @@
+{
+  "created_at_utc": "2026-09-25T19:17:25.343198+00:00",
+  "elapsed_seconds": 1045.643,
+  "datasets": [
+    "abitura_golden",
+    "squad_dev"
+  ],
+  "models": [
+    {
+      "model": "intfloat/multilingual-e5-large",
+      "backend": "e5",
+      "device": "cpu",
+      "datasets": {
+        "abitura_golden": {
+          "query_count": 50,
+          "document_count": 151,
+          "embedding_dimension": 1024,
+          "document_embedding_seconds": 18.143,
+          "query_embedding_seconds": 1.446,
+          "ranking_seconds": 0.001,
+          "metrics": {
+            "hit_rate@1": 0.56,
+            "recall@1": 0.56,
+            "mrr@1": 0.56,
+            "hit_rate@5": 0.9,
+            "recall@5": 0.9,
+            "mrr@5": 0.6839999999999999,
+            "hit_rate@10": 0.98,
+            "recall@10": 0.98,
+            "mrr@10": 0.6946904761904762
+          }
+        },
+        "squad_dev": {
+          "query_count": 10570,
+          "document_count": 2067,
+          "embedding_dimension": 1024,
+          "document_embedding_seconds": 710.172,
+          "query_embedding_seconds": 313.567,
+          "ranking_seconds": 0.354,
+          "metrics": {
+            "hit_rate@1": 0.8030274361400189,
+            "recall@1": 0.8030274361400189,
+            "mrr@1": 0.8030274361400189,
+            "hit_rate@5": 0.9631031220435194,
+            "recall@5": 0.9631031220435194,
+            "mrr@5": 0.8701702932828739,
+            "hit_rate@10": 0.9841059602649007,
+            "recall@10": 0.9841059602649007,
+            "mrr@10": 0.8730491357690964
+          }
+        }
+      }
+    }
+  ]
+}
