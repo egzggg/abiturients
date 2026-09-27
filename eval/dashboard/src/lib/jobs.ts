@@ -64,9 +64,9 @@ export async function startJob(input: unknown) {
     logs: "",
   };
   state.jobs.set(id, job);
-  const venv = path.join(PROJECT_ROOT, ".venv/bin/python");
+  const venv = path.join(PROJECT_ROOT, process.platform === "win32" ? ".venv/Scripts/python.exe" : ".venv/bin/python");
   const python =
-    process.env.EVAL_PYTHON ?? (existsSync(venv) ? venv : "python3");
+    process.env.EVAL_PYTHON ?? (existsSync(venv) ? venv : process.platform === "win32" ? "python" : "python3");
   const child = spawn(
     python,
     [

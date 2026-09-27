@@ -8,27 +8,27 @@ export const MODEL_CATALOG = [
     color: "#74e3bd",
   },
   {
-    id: "intfloat/multilingual-e5-base",
-    name: "Multilingual E5 Base",
-    family: "intfloat",
-    dimension: 768,
-    tag: "Compact",
+    id: "Alibaba-NLP/gte-Qwen2-1.5B-instruct",
+    name: "GTE Qwen2 1.5B",
+    family: "Alibaba NLP",
+    dimension: 1536,
+    tag: "1.5B",
     color: "#9e9af8",
   },
   {
-    id: "BAAI/bge-m3",
-    name: "BGE-M3",
-    family: "BAAI",
-    dimension: 1024,
-    tag: "Multilingual",
+    id: "Qwen/Qwen3-Embedding-4B-GGUF",
+    name: "Qwen3 Embedding 4B",
+    family: "Qwen",
+    dimension: 2560,
+    tag: "4B",
     color: "#efa879",
   },
   {
-    id: "Alibaba-NLP/gte-multilingual-base",
-    name: "GTE Multilingual",
-    family: "Alibaba NLP",
-    dimension: 768,
-    tag: "Multilingual",
+    id: "Qwen/Qwen3-Embedding-8B-GGUF",
+    name: "Qwen3 Embedding 8B",
+    family: "Qwen",
+    dimension: 4096,
+    tag: "8B",
     color: "#83b6f5",
   },
 ] as const;
@@ -82,10 +82,21 @@ export type ResultRow = {
   model: ModelResult;
   result: DatasetResult;
 };
+export const baseModelId = (id: string) => id.split("#", 1)[0];
+export const promptVariantId = (id: string) => id.split("#")[1] ?? "default_query_prompt";
+export function promptLabel(variant: string) {
+  switch (variant) {
+    case "default_query_prompt": return "Стандартная инструкция";
+    case "applicant_task_prompt": return "Инструкция для вопросов абитуриентов";
+    case "web_task_prompt": return "Инструкция для веб-поиска";
+    default: return variant.replaceAll("_", " ");
+  }
+}
 export function modelLabel(id: string) {
-  return (
-    MODEL_CATALOG.find((m) => m.id === id)?.name ?? id.split("/").pop() ?? id
-  );
+  const model = baseModelId(id);
+  const variant = id.includes("#") ? promptVariantId(id) : undefined;
+  const label = MODEL_CATALOG.find((m) => m.id === model)?.name ?? model.split("/").pop() ?? model;
+  return variant ? `${label} · ${promptLabel(variant)}` : label;
 }
 export function resultRows(
   reports: Report[],

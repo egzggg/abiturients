@@ -44,9 +44,12 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import {
+  baseModelId,
   latestByModel,
   MODEL_CATALOG,
   modelLabel,
+  promptLabel,
+  promptVariantId,
   resultRows,
   type DatasetKey,
   type DatasetResult,
@@ -282,6 +285,7 @@ export function Dashboard({
   const [view, setView] = useState<View>("overview");
   const [dataset, setDataset] = useState<DatasetKey>("abitura_golden");
   const [chartModel, setChartModel] = useState<string>(MODEL_CATALOG[0].id);
+  const [chartVariant, setChartVariant] = useState("default_query_prompt");
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [models, setModels] = useState<string[]>([MODEL_CATALOG[0].id]);
   const [runDatasets, setRunDatasets] = useState<string[]>(["golden"]);
@@ -293,12 +297,16 @@ export function Dashboard({
   const [search, setSearch] = useState("");
   const rows = resultRows(reports, dataset);
   const latest = latestByModel(rows);
+  const availableModels = [...new Set(latest.map((row) => baseModelId(row.model.model)))];
+  const selectedModelId = availableModels.includes(chartModel) ? chartModel : availableModels[0] ?? chartModel;
+  const modelRows = latest.filter((row) => baseModelId(row.model.model) === selectedModelId);
+  const promptVariants = [...new Set(modelRows.map((row) => promptVariantId(row.model.model)))];
   const selected =
     rows.find(
-      (r) => r.report.file === selectedFile && r.model.model === chartModel,
+      (r) => r.report.file === selectedFile && baseModelId(r.model.model) === selectedModelId && promptVariantId(r.model.model) === chartVariant,
     ) ??
-    latest.find((r) => r.model.model === chartModel) ??
-    latest[0];
+    modelRows.find((r) => promptVariantId(r.model.model) === chartVariant) ??
+    modelRows[0];
   const result = selected?.result;
   const stats = datasets.find((d) => d.key === dataset)!;
   const activeJob = jobs.find(
@@ -615,7 +623,7 @@ export function Dashboard({
                       ))}
                     </div>
                     <span className="text-[10px] text-muted-foreground">
-                      {latest.length} из {MODEL_CATALOG.length} моделей
+                      {MODEL_CATALOG.filter((m) => latest.some((r) => r.model.model === m.id)).length} из {MODEL_CATALOG.length} моделей
                       протестировано
                     </span>
                   </div>
@@ -664,20 +672,21 @@ export function Dashboard({
                                 Как меняются метрики с глубиной поиска
                               </p>
                             </div>
-                            <div className="w-[190px]">
+                            <div className="flex flex-wrap gap-2">
                               <Select
-                                value={selected?.model.model ?? chartModel}
+                                value={selectedModelId}
                                 onValueChange={(value) => {
                                   setChartModel(value);
+                                  setChartVariant("default_query_prompt");
                                   setSelectedFile(null);
                                 }}
                               >
-                                <SelectTrigger aria-label="Модель на графике">
+                                <SelectTrigger aria-label="Модель на графике" className="w-[190px]">
                                   <SelectValue placeholder="Выберите модель" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  {(latest.length
-                                    ? latest.map((r) => r.model.model)
+                                  {(availableModels.length
+                                    ? availableModels
                                     : [MODEL_CATALOG[0].id]
                                   ).map((id) => (
                                     <SelectItem key={id} value={id}>
@@ -686,6 +695,18 @@ export function Dashboard({
                                   ))}
                                 </SelectContent>
                               </Select>
+                              {promptVariants.length > 1 && (
+                                <Select value={promptVariantId(selected?.model.model ?? "")} onValueChange={(value) => { setChartVariant(value); setSelectedFile(null); }}>
+                                  <SelectTrigger aria-label="Инструкция для поиска" className="w-[220px]">
+                                    <SelectValue placeholder="Выберите инструкцию" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {promptVariants.map((variant) => (
+                                      <SelectItem key={variant} value={variant}>{promptLabel(variant)}</SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              )}
                             </div>
                           </CardHeader>
                           <CardContent>
@@ -865,7 +886,7 @@ export function Dashboard({
                               </span>
                             </legend>
                             <div className="space-y-2">
-                              {MODEL_CATALOG.map((m) => (
+                              {MODEL_CATALOG.filter((m) => m.tag === "Baseline").map((m) => (
                                 <label
                                   key={m.id}
                                   className={cn(
@@ -1071,7 +1092,8 @@ export function Dashboard({
                                   <button
                                     className="text-left hover:text-primary"
                                     onClick={() => {
-                                      setChartModel(row.model.model);
+                                      setChartModel(baseModelId(row.model.model));
+                                      setChartVariant(promptVariantId(row.model.model));
                                       setSelectedFile(row.report.file);
                                       setView("overview");
                                     }}

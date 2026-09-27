@@ -24,7 +24,26 @@ test("dashboard renders and reads valid local reports", async () => {
     );
     assert.equal(download.status, 200);
     assert.match(download.headers.get("content-disposition"), /attachment/);
-    assert.deepEqual((await download.json()).models, report.models);
+    const source = await download.json();
+    assert.equal(source.created_at_utc, report.created_at_utc);
+  }
+});
+
+test("loads current embedding comparisons and preserves source variants", async () => {
+  const response = await fetch(`${base}/api/reports`);
+  assert.equal(response.status, 200);
+  const reports = await response.json();
+  const expected = [
+    "gte_qwen2_1_5b_golden_comparison.json",
+    "qwen3_embedding_4b_gguf_golden_comparison.json",
+    "qwen3_embedding_8b_gguf_golden_comparison.json",
+  ];
+  for (const file of expected) {
+    const report = reports.find((item) => item.file === file);
+    assert.ok(report, `${file} missing from dashboard`);
+    assert.ok(report.models.some((model) => model.model.includes("#applicant_task_prompt")));
+    const source = await (await fetch(`${base}/api/reports/${file}`)).json();
+    assert.ok(source.variants.applicant_task_prompt);
   }
 });
 
