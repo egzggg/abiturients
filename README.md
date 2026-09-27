@@ -82,6 +82,22 @@ E5 оценивается с теми же префиксами, усредне�
 выбора модели для бота отдельно смотрите результат `abitura_golden` на русском
 корпусе.
 
+## Eval Studio: локальная панель
+
+В `eval/dashboard/` находится тёмная панель на Next.js, React, Tailwind CSS,
+shadcn/ui (Radix) и Framer Motion. Она читает реальные отчёты из `eval/results/`,
+показывает график Hit rate/MRR, сравнение моделей и историю экспериментов.
+Из интерфейса можно запускать evaluator, смотреть его логи и останавливать прогон.
+
+```bash
+npm --prefix eval/dashboard ci
+make evalDashboard
+```
+
+Откройте [http://localhost:3000](http://localhost:3000).
+Для BGE-M3/GTE требуется `.venv/bin/pip install sentence-transformers`.
+Подробности и переменные окружения — в [eval/dashboard/README.md](eval/dashboard/README.md).
+
 ## Конфигурация
 
 Все параметры описаны в `.env.example`. Основные:

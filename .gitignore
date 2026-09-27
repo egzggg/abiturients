@@ -13,3 +13,9 @@ logs/*.jsonl
 
 # Notebook checkpoints
 .ipynb_checkpoints/
+
+# Eval dashboard
+eval/dashboard/node_modules/
+eval/dashboard/.next/
+eval/dashboard/*.tsbuildinfo
+eval/dashboard/.env.local

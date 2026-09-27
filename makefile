@@ -2,7 +2,7 @@ PYTHON := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 QUESTION ?= Какие направления обучения доступны?
 
 .PHONY: infra createCollections runLoadKB runLoadQueries runLoadQdr \
-	runChunk runSearchChunksTest runApplication test evalEmbeddings
+	runChunk runSearchChunksTest runApplication test evalEmbeddings evalDashboard
 
 infra:
 	docker compose up -d redis qdrant
@@ -32,3 +32,6 @@ test:
 
 evalEmbeddings:
 	$(PYTHON) -m eval.evaluate_embeddings $(EVAL_ARGS)
+
+evalDashboard:
+	cd eval/dashboard && npm run dev
