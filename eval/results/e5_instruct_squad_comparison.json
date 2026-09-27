@@ -1,0 +1,30 @@
+{
+  "created_at_utc": "2026-09-27T16:36:35.412262+00:00",
+  "model": "intfloat/multilingual-e5-large-instruct",
+  "backend": "sentence-transformers PyTorch FP32 CPU",
+  "dataset": "squad_dev",
+  "query_count": 10570,
+  "document_count": 2067,
+  "dimension": 1024,
+  "batch_size": 16,
+  "document_embedding_seconds": 409.086,
+  "variants": {
+    "web_task_prompt": {
+      "query_embedding_seconds": 424.528,
+      "metrics": {
+        "hit_rate@1": 0.7567644276253548,
+        "recall@1": 0.7567644276253548,
+        "mrr@1": 0.7567644276253548,
+        "hit_rate@4": 0.934247871333964,
+        "recall@4": 0.934247871333964,
+        "mrr@4": 0.8321270892462915,
+        "hit_rate@5": 0.9460737937559129,
+        "recall@5": 0.9460737937559129,
+        "mrr@5": 0.8344922737306808,
+        "hit_rate@10": 0.9727530747398297,
+        "recall@10": 0.9727530747398297,
+        "mrr@10": 0.8382009205448152
+      }
+    }
+  }
+}

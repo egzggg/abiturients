@@ -32,13 +32,54 @@ const reportSchema = z.object({
     }),
   ),
 });
-export async function readReport(file: string): Promise<Report> {
+const variantReportSchema = z.object({
+  created_at_utc: z.string().datetime({ offset: true }),
+  model: z.string(),
+  backend: z.string(),
+  dataset: z.enum(["abitura_golden", "squad_dev"]),
+  query_count: z.number().positive(),
+  document_count: z.number().positive(),
+  dimension: z.number().positive(),
+  document_embedding_seconds: z.number().nonnegative(),
+  variants: z.record(z.string(), z.object({
+    query_embedding_seconds: z.number().nonnegative(),
+    metrics: z.record(z.string(), z.number().min(0).max(1)),
+  })),
+});
+export async function readReportSource(file: string): Promise<unknown> {
   if (!/^[a-zA-Z0-9_.-]+\.json$/.test(file) || file.includes(".."))
     throw new Error("Invalid report filename");
-  const data = reportSchema.parse(
-    JSON.parse(await fs.readFile(path.join(RESULTS_DIR, file), "utf8")),
-  );
-  return { ...data, file };
+  return JSON.parse(await fs.readFile(path.join(RESULTS_DIR, file), "utf8"));
+}
+export async function readReport(file: string): Promise<Report> {
+  const source = await readReportSource(file);
+  const legacy = reportSchema.safeParse(source);
+  if (legacy.success) return { ...legacy.data, file };
+  const data = variantReportSchema.parse(source);
+  const variants = Object.entries(data.variants);
+  if (!variants.length) throw new Error("Report has no variants");
+  return {
+    file,
+    created_at_utc: data.created_at_utc,
+    elapsed_seconds: data.document_embedding_seconds + Math.max(...variants.map(([, v]) => v.query_embedding_seconds)),
+    datasets: [data.dataset],
+    models: variants.map(([name, variant]) => ({
+      model: name === "default_query_prompt" ? data.model : `${data.model}#${name}`,
+      backend: data.backend,
+      device: data.backend.toLowerCase().includes("cpu") ? "cpu" : "local",
+      datasets: {
+        [data.dataset]: {
+          query_count: data.query_count,
+          document_count: data.document_count,
+          embedding_dimension: data.dimension,
+          document_embedding_seconds: data.document_embedding_seconds,
+          query_embedding_seconds: variant.query_embedding_seconds,
+          ranking_seconds: 0,
+          metrics: variant.metrics,
+        },
+      },
+    })),
+  };
 }
 export async function readReports(): Promise<Report[]> {
   const files = await fs.readdir(RESULTS_DIR).catch(() => [] as string[]);

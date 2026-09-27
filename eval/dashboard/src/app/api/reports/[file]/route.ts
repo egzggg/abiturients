@@ -1,4 +1,4 @@
-import { readReport } from "@/lib/server";
+import { readReport, readReportSource } from "@/lib/server";
 export const runtime = "nodejs";
 export async function GET(
   _: Request,
@@ -6,7 +6,8 @@ export async function GET(
 ) {
   try {
     const { file } = await context.params;
-    const { file: _file, ...report } = await readReport(file);
+    await readReport(file);
+    const report = await readReportSource(file);
     return new Response(JSON.stringify(report, null, 2), {
       headers: {
         "Content-Type": "application/json",

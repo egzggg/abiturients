@@ -1,0 +1,31 @@
+{
+  "created_at_utc": "2026-09-27T21:49:29.232882+00:00",
+  "model": "Qwen/Qwen3-Embedding-4B-GGUF",
+  "model_file": "Qwen3-Embedding-4B-Q8_0.gguf",
+  "backend": "llama.cpp GGUF via local /v1/embeddings",
+  "dataset": "squad_dev",
+  "query_count": 10570,
+  "document_count": 2067,
+  "dimension": 2560,
+  "batch_size": 4,
+  "document_embedding_seconds": 120.377,
+  "variants": {
+    "default_query_prompt": {
+      "query_embedding_seconds": 140.352,
+      "metrics": {
+        "hit_rate@1": 0.7841059602649006,
+        "recall@1": 0.7841059602649006,
+        "mrr@1": 0.7841059602649006,
+        "hit_rate@4": 0.9422894985808893,
+        "recall@4": 0.9422894985808893,
+        "mrr@4": 0.8525543992431405,
+        "hit_rate@5": 0.9532639545884579,
+        "recall@5": 0.9532639545884579,
+        "mrr@5": 0.8547492904446538,
+        "hit_rate@10": 0.9765373699148534,
+        "recall@10": 0.9765373699148534,
+        "mrr@10": 0.8579773167545159
+      }
+    }
+  }
+}
