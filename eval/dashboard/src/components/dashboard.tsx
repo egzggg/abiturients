@@ -69,6 +69,16 @@ const date = (value: string) =>
     hour: "2-digit",
     minute: "2-digit",
   });
+const modelColor = (id: string) => {
+  const known = MODEL_CATALOG.find((model) => model.id === baseModelId(id));
+  if (known) return known.color;
+  const palette = ["#e4a66d", "#d999bd", "#82b5e5", "#c4a5ee", "#8dc7a7"];
+  const hash = [...baseModelId(id)].reduce(
+    (value, character) => (value * 31 + character.charCodeAt(0)) >>> 0,
+    7,
+  );
+  return palette[hash % palette.length];
+};
 const statusLabel = {
   cancelling: "Останавливается",
   running: "В процессе",
@@ -243,9 +253,7 @@ function RetrievalChart({ result }: { result?: DatasetResult }) {
                     strokeWidth="2"
                     fill={s.color}
                   >
-                    <title>
-                      {s.label}@{ks[i]}: {pct(v)}
-                    </title>
+                    <title>{`${s.label}@${ks[i]}: ${pct(v)}`}</title>
                   </circle>
                 </g>
               ))}
@@ -298,6 +306,31 @@ export function Dashboard({
   const rows = resultRows(reports, dataset);
   const latest = latestByModel(rows);
   const availableModels = [...new Set(latest.map((row) => baseModelId(row.model.model)))];
+  const testedModelCount = availableModels.length;
+  const baselineModelId = MODEL_CATALOG.find((model) => model.tag === "Baseline")?.id;
+  const comparisonEntries = [
+    ...MODEL_CATALOG.map((model) => ({
+      key: model.id,
+      id: model.id,
+      name: model.name,
+      family: model.family,
+      color: model.color,
+      row: latest.find((row) => row.model.model === model.id),
+    })).filter((entry) => entry.row || entry.id === baselineModelId),
+    ...latest
+      .filter((row) => !MODEL_CATALOG.some((model) => model.id === row.model.model))
+      .map((row) => ({
+        key: row.model.model,
+        id: row.model.model,
+        name: modelLabel(row.model.model),
+        family: row.model.backend,
+        color: modelColor(row.model.model),
+        row,
+      })),
+  ];
+  const visibleComparisonEntries = comparisonEntries.filter((entry) =>
+    `${entry.name} ${entry.id} ${entry.family}`.toLowerCase().includes(search.toLowerCase()),
+  );
   const selectedModelId = availableModels.includes(chartModel) ? chartModel : availableModels[0] ?? chartModel;
   const modelRows = latest.filter((row) => baseModelId(row.model.model) === selectedModelId);
   const promptVariants = [...new Set(modelRows.map((row) => promptVariantId(row.model.model)))];
@@ -623,8 +656,7 @@ export function Dashboard({
                       ))}
                     </div>
                     <span className="text-[10px] text-muted-foreground">
-                      {MODEL_CATALOG.filter((m) => latest.some((r) => r.model.model === m.id)).length} из {MODEL_CATALOG.length} моделей
-                      протестировано
+                      {testedModelCount} моделей · {latest.length} вариантов с результатами
                     </span>
                   </div>
                 )}
@@ -652,7 +684,11 @@ export function Dashboard({
                             ? "—"
                             : `${queryMs.toFixed(1)} ms`
                         }
-                        note="Среднее время кодирования запроса"
+                        note={
+                          result?.query_latency_p95_ms === undefined
+                            ? "Среднее время кодирования запроса"
+                            : `P95 ${result.query_latency_p95_ms.toFixed(1)} ms · среднее время кодирования`
+                        }
                         icon={Clock3}
                       />
                       <MetricCard
@@ -733,7 +769,7 @@ export function Dashboard({
                             <div>
                               <CardTitle>Сравнение моделей</CardTitle>
                               <p className="mt-1.5 text-[10px] text-muted-foreground">
-                                Последний результат каждой модели · {stats.name}
+                                Последние результаты моделей и вариантов · {stats.name}
                               </p>
                             </div>
                             <div className="relative">
@@ -758,26 +794,21 @@ export function Dashboard({
                                   <th className="px-3 font-normal">HIT @10</th>
                                   <th className="px-3 font-normal">MRR @10</th>
                                   <th className="pr-5 text-right font-normal">
-                                    ms / query
+                                    MEAN / P95 · MS/QUERY
                                   </th>
                                 </tr>
                               </thead>
                               <tbody>
-                                {MODEL_CATALOG.filter((m) =>
-                                  `${m.name} ${m.id}`
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase()),
-                                ).map((m) => {
-                                  const row = latest.find(
-                                    (r) => r.model.model === m.id,
-                                  );
+                                {visibleComparisonEntries.map((entry) => {
+                                  const row = entry.row;
                                   return (
                                     <tr
-                                      key={m.id}
+                                      key={entry.key}
                                       className={cn(
                                         "border-b border-border/50 last:border-0",
                                         row &&
-                                          chartModel === m.id &&
+                                          chartModel === baseModelId(entry.id) &&
+                                          promptVariantId(entry.id) === chartVariant &&
                                           "bg-primary/[0.025]",
                                       )}
                                     >
@@ -786,16 +817,15 @@ export function Dashboard({
                                           className="flex items-center gap-2.5 text-left disabled:cursor-default"
                                           disabled={!row}
                                           onClick={() => {
-                                            setChartModel(m.id);
+                                            setChartModel(baseModelId(entry.id));
+                                            setChartVariant(promptVariantId(entry.id));
                                             setSelectedFile(null);
                                           }}
                                         >
                                           <span
                                             className="size-2 shrink-0 rounded-full"
                                             style={{
-                                              background: row
-                                                ? m.color
-                                                : "#42454c",
+                                              background: row ? entry.color : "#42454c",
                                             }}
                                           />
                                           <span>
@@ -805,12 +835,12 @@ export function Dashboard({
                                                 !row && "text-muted-foreground",
                                               )}
                                             >
-                                              {m.name}
+                                              {entry.name}
                                             </span>
                                             <span className="mt-0.5 block text-[9px] text-muted-foreground/70">
                                               {row
-                                                ? `${m.family} · ${row.result.embedding_dimension}d · ${row.model.device.toUpperCase()}`
-                                                : "Нет прогонов"}
+                                                ? `${entry.family} · ${row.result.embedding_dimension}d · ${row.model.device.toUpperCase()}`
+                                                : `${entry.family} · Нет прогонов`}
                                             </span>
                                           </span>
                                         </button>
@@ -832,25 +862,27 @@ export function Dashboard({
                                         {pct(row?.result.metrics["mrr@10"])}
                                       </td>
                                       <td className="pr-5 text-right text-muted-foreground tabular-nums">
-                                        {row
-                                          ? (
-                                              (row.result
-                                                .query_embedding_seconds /
+                                        {row ? (
+                                          <>
+                                            {(
+                                              (row.result.query_embedding_seconds /
                                                 row.result.query_count) *
                                               1000
-                                            ).toFixed(1)
-                                          : "—"}
+                                            ).toFixed(1)}
+                                            {row.result.query_latency_p95_ms !== undefined && (
+                                              <span className="ml-1 text-[9px] text-muted-foreground/70">
+                                                / {row.result.query_latency_p95_ms.toFixed(1)} p95
+                                              </span>
+                                            )}
+                                          </>
+                                        ) : "—"}
                                       </td>
                                     </tr>
                                   );
                                 })}
                               </tbody>
                             </table>
-                            {!MODEL_CATALOG.some((m) =>
-                              `${m.name} ${m.id}`
-                                .toLowerCase()
-                                .includes(search.toLowerCase()),
-                            ) && (
+                            {!visibleComparisonEntries.length && (
                               <p className="py-8 text-center text-xs text-muted-foreground">
                                 Модель не найдена
                               </p>

@@ -13,6 +13,7 @@ const resultSchema = z.object({
   embedding_dimension: z.number(),
   document_embedding_seconds: z.number().nonnegative(),
   query_embedding_seconds: z.number().nonnegative(),
+  query_latency_p95_ms: z.number().nonnegative().optional(),
   ranking_seconds: z.number().nonnegative(),
   metrics: z.record(z.string(), z.number().min(0).max(1)),
 });
@@ -46,6 +47,23 @@ const variantReportSchema = z.object({
     metrics: z.record(z.string(), z.number().min(0).max(1)),
   })),
 });
+const onnxReportSchema = z.object({
+  created_at_utc: z.string().datetime({ offset: true }),
+  dataset: z.enum(["abitura_golden", "squad_dev"]),
+  query_count: z.number().positive(),
+  document_count: z.number().positive(),
+  models: z.array(z.object({
+    model: z.string(),
+    format: z.string(),
+    onnx_variant: z.string(),
+    embedding_dimension: z.number().positive(),
+    load_seconds: z.number().nonnegative(),
+    document_embedding_seconds: z.number().nonnegative(),
+    query_latency_mean_ms: z.number().nonnegative(),
+    query_latency_p95_ms: z.number().nonnegative(),
+    metrics: z.record(z.string(), z.number().min(0).max(1)),
+  })),
+});
 export async function readReportSource(file: string): Promise<unknown> {
   if (!/^[a-zA-Z0-9_.-]+\.json$/.test(file) || file.includes(".."))
     throw new Error("Invalid report filename");
@@ -55,27 +73,59 @@ export async function readReport(file: string): Promise<Report> {
   const source = await readReportSource(file);
   const legacy = reportSchema.safeParse(source);
   if (legacy.success) return { ...legacy.data, file };
-  const data = variantReportSchema.parse(source);
-  const variants = Object.entries(data.variants);
-  if (!variants.length) throw new Error("Report has no variants");
+  const variant = variantReportSchema.safeParse(source);
+  if (variant.success) {
+    const data = variant.data;
+    const variants = Object.entries(data.variants);
+    if (!variants.length) throw new Error("Report has no variants");
+    return {
+      file,
+      created_at_utc: data.created_at_utc,
+      elapsed_seconds: data.document_embedding_seconds + Math.max(...variants.map(([, v]) => v.query_embedding_seconds)),
+      datasets: [data.dataset],
+      models: variants.map(([name, result]) => ({
+        model: name === "default_query_prompt" ? data.model : `${data.model}#${name}`,
+        backend: data.backend,
+        device: data.backend.toLowerCase().includes("cpu") ? "cpu" : "local",
+        datasets: {
+          [data.dataset]: {
+            query_count: data.query_count,
+            document_count: data.document_count,
+            embedding_dimension: data.dimension,
+            document_embedding_seconds: data.document_embedding_seconds,
+            query_embedding_seconds: result.query_embedding_seconds,
+            ranking_seconds: 0,
+            metrics: result.metrics,
+          },
+        },
+      })),
+    };
+  }
+
+  const data = onnxReportSchema.parse(source);
   return {
     file,
     created_at_utc: data.created_at_utc,
-    elapsed_seconds: data.document_embedding_seconds + Math.max(...variants.map(([, v]) => v.query_embedding_seconds)),
+    elapsed_seconds: data.models.reduce(
+      (total, model) => total + model.load_seconds + model.document_embedding_seconds +
+        (model.query_latency_mean_ms * data.query_count) / 1000,
+      0,
+    ),
     datasets: [data.dataset],
-    models: variants.map(([name, variant]) => ({
-      model: name === "default_query_prompt" ? data.model : `${data.model}#${name}`,
-      backend: data.backend,
-      device: data.backend.toLowerCase().includes("cpu") ? "cpu" : "local",
+    models: data.models.map((model) => ({
+      model: `${model.model}#onnx_int8`,
+      backend: model.format,
+      device: "cpu",
       datasets: {
         [data.dataset]: {
           query_count: data.query_count,
           document_count: data.document_count,
-          embedding_dimension: data.dimension,
-          document_embedding_seconds: data.document_embedding_seconds,
-          query_embedding_seconds: variant.query_embedding_seconds,
+          embedding_dimension: model.embedding_dimension,
+          document_embedding_seconds: model.document_embedding_seconds,
+          query_embedding_seconds: (model.query_latency_mean_ms * data.query_count) / 1000,
+          query_latency_p95_ms: model.query_latency_p95_ms,
           ranking_seconds: 0,
-          metrics: variant.metrics,
+          metrics: model.metrics,
         },
       },
     })),
