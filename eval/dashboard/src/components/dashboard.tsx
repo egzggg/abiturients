@@ -25,6 +25,7 @@ import {
   Terminal,
   X,
 } from "lucide-react";
+import { AnswersPanel } from "@/components/answers-panel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,7 +59,7 @@ import {
   type Report,
 } from "@/lib/types";
 
-type View = "overview" | "history" | "datasets";
+type View = "overview" | "history" | "datasets" | "answers";
 const number = new Intl.NumberFormat("ru-RU");
 const pct = (v?: number) =>
   v === undefined ? "—" : `${(v * 100).toFixed(1)}%`;
@@ -290,7 +291,7 @@ export function Dashboard({
 }) {
   const [reports, setReports] = useState(initialReports);
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [view, setView] = useState<View>("overview");
+  const [view, setView] = useState<View>("answers");
   const [dataset, setDataset] = useState<DatasetKey>("abitura_golden");
   const [chartModel, setChartModel] = useState<string>(MODEL_CATALOG[0].id);
   const [chartVariant, setChartVariant] = useState("default_query_prompt");
@@ -427,11 +428,13 @@ export function Dashboard({
   }
 
   const nav = [
+    { id: "answers" as const, label: "Ответы", icon: Database },
     { id: "overview" as const, label: "Обзор", icon: LayoutDashboard },
     { id: "history" as const, label: "Эксперименты", icon: FlaskConical },
     { id: "datasets" as const, label: "Датасеты", icon: Database },
   ];
   const titles = {
+    answers: "Ответы и оценки",
     overview: "Обзор экспериментов",
     history: "История экспериментов",
     datasets: "Датасеты",
@@ -561,13 +564,15 @@ export function Dashboard({
               <div>
                 <div className="mb-2.5 flex items-center gap-2 text-[10px] font-medium tracking-[0.12em] text-muted-foreground uppercase">
                   <span className="h-px w-5 bg-primary" />
-                  Embedding benchmark
+                  {view === "answers" ? "Оценка ответов" : "Embedding benchmark"}
                 </div>
                 <h1 className="text-[26px] font-semibold tracking-[-0.035em] sm:text-[30px]">
                   {titles[view]}
                 </h1>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  {view === "overview"
+                  {view === "answers"
+                    ? "Вопросы, ответы моделей и результаты оценки."
+                    : view === "overview"
                     ? "Сравнивайте модели. Измеряйте качество поиска. Выбирайте по данным."
                     : view === "history"
                       ? "Сохранённые отчёты и состояние локальных запусков."
@@ -578,13 +583,13 @@ export function Dashboard({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => void refresh()}
+                  onClick={() => { void refresh(); window.dispatchEvent(new Event("answers-refresh")); }}
                   disabled={refreshing}
                 >
                   <RefreshCw className={cn(refreshing && "animate-spin")} />
                   Обновить
                 </Button>
-                {selected && (
+                {selected && view !== "answers" && (
                   <Button variant="outline" size="sm" asChild>
                     <a
                       href={`/api/reports/${encodeURIComponent(selected.report.file)}`}
@@ -624,7 +629,7 @@ export function Dashboard({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                {view !== "datasets" && (
+                {view !== "datasets" && view !== "answers" && (
                   <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                     <div
                       className="inline-flex gap-1 rounded-lg border border-border bg-[#151619] p-1"
@@ -660,6 +665,8 @@ export function Dashboard({
                     </span>
                   </div>
                 )}
+
+                {view === "answers" && <AnswersPanel />}
 
                 {view === "overview" && (
                   <>

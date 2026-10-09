@@ -1,23 +1,102 @@
-# SQuAD 1.1 evaluation data
+# Подготовка SQuAD для RAG
 
-This directory contains only the public SQuAD 1.1 development split for evaluation.
+`converter.py` превращает исходный SQuAD в два набора данных, каждый в JSON и CSV: **тексты для поиска** и **вопросы с эталонными ответами для проверки RAG**.
 
-- `dev-v1.1.json` — 10,570 questions from 48 Wikipedia articles and 2,067 paragraphs.
-- The Kaggle archive also contained `train-v1.1.json`; it is intentionally not part of this evaluation directory.
-- The JSON is kept in the original SQuAD structure. Each question's answer text and character offset are in `answers.text` and `answers.answer_start`.
-
-## Source and license
-
-Downloaded from the public Kaggle dataset [`stanfordu/stanford-question-answering-dataset`](https://www.kaggle.com/datasets/stanfordu/stanford-question-answering-dataset) on 2026-09-25. The dataset is distributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) according to the [official SQuAD site](https://rajpurkar.github.io/SQuAD-explorer/). Preserve attribution and the license when redistributing it.
-
-SHA-256 of `dev-v1.1.json`:
+## Что лежит в папке
 
 ```text
-95aa6a52d5d6a735563366753ca50492a658031da74f301ac5238b03966972c9
+squad/
+├── inputDataset/          ← сюда кладём исходные JSON-файлы SQuAD
+│   ├── train-v1.1.json
+│   └── dev-v1.1.json
+├── chanksGt/              ← сюда конвертер сохраняет результат
+│   ├── chunks.json        ← чанки для индексации
+│   ├── gt.json            ← вопросы, ответы и ссылки на чанки
+│   ├── chunks.csv         ← копия чанков в CSV
+│   └── gt.csv             ← копия GT в CSV
+├── converter.py
+└── README.md
 ```
 
-## Use in the embedding benchmark
+Исходники и результаты хранятся отдельно, чтобы сохранить оригиналы и повторять преобразование. Конвертер читает только `inputDataset`, поэтому его результаты не попадут обратно на вход.
 
-Use each SQuAD paragraph as a retrieval document and its questions as queries. A retrieved paragraph is relevant when it contains one of the annotated answer spans. Compare embedding models with retrieval metrics such as Recall@k and MRR. For the downstream answer check, keep the LLM and prompt fixed across embedding models and compare generated answers with the annotated spans using Exact Match and token F1.
+## Как запустить
 
-SQuAD 1.1 contains answerable questions only. It does not measure whether the system abstains when the context lacks an answer; use SQuAD 2.0 for that evaluation.
+Нужен Python 3.9 или новее. Устанавливать библиотеки не требуется.
+
+1. Положи JSON-файлы в `inputDataset`. Они должны иметь исходную структуру SQuAD: статьи → абзацы → вопросы и ответы.
+2. Из папки `eval` выполни:
+
+   ```bash
+   python3 squad/converter.py
+   ```
+
+3. Забери `chunks.json` и `gt.json` или их CSV-копии `chunks.csv` и `gt.csv` из `chanksGt`.
+
+Конвертер обрабатывает все JSON-файлы непосредственно в `inputDataset`, без вложенных папок, и объединяет их в наборы чанков и GT в форматах JSON и CSV. При повторном запуске результаты перезаписываются, исходники остаются без изменений.
+
+Для текущих `train` и `dev` результат: **20 963 чанка и 98 169 вопросов**.
+
+## Что получается
+
+Оба выходных файла — JSON-массивы объектов в UTF-8. Ниже учебный пример их связи.
+
+**`chunks.json`** содержит исходные абзацы. Один абзац SQuAD становится одним чанком; его текст сохраняется целиком.
+
+```json
+[
+  {
+    "chunk_id": "train:0:0",
+    "title": "Example_article",
+    "text": "Paris is the capital of France."
+  }
+]
+```
+
+- `chunk_id` — уникальный ID чанка.
+- `title` — название исходной статьи Wikipedia.
+- `text` — текст абзаца из поля `context`.
+
+**`gt.json`** содержит GT (ground truth): эталонные данные для проверки.
+
+```json
+[
+  {
+    "question_id": "example_question_001",
+    "question": "What is the capital of France?",
+    "answers": ["Paris"],
+    "chunk_id": "train:0:0"
+  }
+]
+```
+
+- `question_id` — ID вопроса из исходного датасета.
+- `question` — вопрос для подачи в RAG.
+- `answers` — допустимые эталонные ответы. Разные варианты сохраняются, точные повторы удаляются.
+- `chunk_id` — ID чанка, содержащего ответ.
+
+**Несколько вопросов могут ссылаться на один чанк.** Текст хранится один раз в `chunks.json`, а вопросы к нему — отдельными записями в `gt.json`.
+
+## Формат CSV
+
+`chunks.csv` и `gt.csv` содержат те же записи и поля, что JSON-файлы. Первая строка — названия столбцов; разделитель — `|`; кодировка — UTF-8. Кавычки, символы `|` и переносы строк внутри текста обрабатываются стандартным CSV-экранированием.
+
+В `gt.csv` поле `answers` хранится как JSON-массив внутри одной ячейки, например `["Paris", "the city of Paris"]`. При чтении в Python восстановить список можно через `json.loads(row["answers"])`.
+
+## Откуда берётся chunk_id
+
+Формат: `<имя файла>:<индекс статьи>:<индекс абзаца>`.
+
+Например, `train:0:0` — первый абзац первой статьи из `train-v1.1.json`. Индексы начинаются с нуля; из имени файла убираются `.json` и суффикс `-v1.1`, если он есть.
+
+Префикс помогает различать чанки из разных файлов. Отдельного поля `split` в результатах нет.
+
+## Как использовать в RAG
+
+Индексируй тексты из `chunks.json`, сохраняя их `chunk_id`. Подавай вопросы из `gt.json` и сравнивай найденные чанки с эталонным `chunk_id`, а сгенерированный ответ — с вариантами в `answers`.
+
+## Источник данных
+
+[SQuAD на Kaggle](https://www.kaggle.com/datasets/stanfordu/stanford-question-answering-dataset) · [Официальная страница SQuAD](https://rajpurkar.github.io/SQuAD-explorer/).
+
+Лицензия исходного датасета — [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). При распространении данных сохраняй указание источника и лицензии.

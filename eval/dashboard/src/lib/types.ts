@@ -181,3 +181,59 @@ export function latestByModel(rows: ResultRow[]) {
     return true;
   });
 }
+
+export type AnswerRecord = {
+  id: number;
+  llm_model: string | null;
+  request: string | null;
+  answer: string | null;
+  llm_judge_model: string | null;
+  manual_grade: string | null;
+  llm_grade: string | null;
+};
+export type AnswersPage = {
+  summary: AnswerModelSummary[];
+  clusters: QuestionCluster[];
+  generatingIds: number[];
+  models: string[];
+  judgeModels: string[];
+  available: boolean;
+  rows: AnswerRecord[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
+
+export type AnswerGradeSummary = {
+  correct: number;
+  incorrect: number;
+  missing: number;
+  unrecognized: number;
+  evaluated: number;
+  accuracy: number | null;
+};
+export type AnswerModelSummary = {
+  model: string | null;
+  total: number;
+  answered: number;
+  manual: AnswerGradeSummary;
+  llm: AnswerGradeSummary;
+};
+
+export type GenerationConfig = {
+  models: string[];
+  configured: boolean;
+};
+
+export type QuestionCluster = {
+  id: string;
+  filename: string;
+  model: string;
+  total: number;
+  completed: number;
+  failed: number;
+  status: "queued" | "running" | "completed" | "completed_with_errors";
+  startedAt: string;
+  processingId?: number;
+  error?: string;
+};

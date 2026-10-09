@@ -105,7 +105,7 @@ def load_golden_dataset() -> RetrievalDataset:
 
 def load_squad_dataset() -> RetrievalDataset:
     """Use each unique SQuAD paragraph as a document and its QAs as queries."""
-    with (EVAL_DIR / "squad" / "dev-v1.1.json").open(encoding="utf-8") as file:
+    with (EVAL_DIR / "squad" / "inputDataset" / "dev-v1.1.json").open(encoding="utf-8") as file:
         squad = json.load(file)
 
     docs: list[tuple[str, str]] = []
